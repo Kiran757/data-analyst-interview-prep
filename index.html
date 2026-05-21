@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Data Analyst Interview Prep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0b0f1a;
+    --bg2: #111827;
+    --bg3: #1a2236;
+    --card: #141c2e;
+    --border: rgba(99,179,237,0.15);
+    --border-hover: rgba(99,179,237,0.4);
+    --accent: #63b3ed;
+    --accent2: #4fd1c5;
+    --accent3: #f6ad55;
+    --text: #e2e8f0;
+    --muted: #718096;
+    --muted2: #a0aec0;
+    --correct: #48bb78;
+    --pill-sql: rgba(99,179,237,0.12);
+    --pill-sql-t: #90cdf4;
+    --pill-stat: rgba(79,209,197,0.12);
+    --pill-stat-t: #81e6d9;
+    --pill-tool: rgba(246,173,85,0.12);
+    --pill-tool-t: #fbd38d;
+    --pill-biz: rgba(182,121,255,0.12);
+    --pill-biz-t: #d6bcfa;
+    --pill-viz: rgba(252,129,129,0.12);
+    --pill-viz-t: #feb2b2;
+    --pill-beh: rgba(104,211,145,0.12);
+    --pill-beh-t: #9ae6b4;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(135deg, #0d1b35 0%, #0b1628 40%, #0f1a2e 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 3.5rem 2rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 50% 0%, rgba(99,179,237,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    background: rgba(79,209,197,0.1);
+    border: 1px solid rgba(79,209,197,0.25);
+    border-radius: 100px;
+    padding: 4px 14px;
+    margin-bottom: 1.2rem;
+  }
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 400;
+    line-height: 1.2;
+    color: #fff;
+    margin-bottom: 0.8rem;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  header p {
+    color: var(--muted2);
+    font-size: 1rem;
+    max-width: 520px;
+    margin: 0 auto 1.8rem;
+  }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--accent);
+    display: block;
+  }
+  .stat-label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* ── CONTROLS ── */
+  .controls {
+    max-width: 900px;
+    margin: 2rem auto 0;
+    padding: 0 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+  }
+  .search-wrap {
+    flex: 1;
+    min-width: 220px;
+    position: relative;
+  }
+  .search-wrap input {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.6rem 1rem 0.6rem 2.6rem;
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border 0.2s;
+  }
+  .search-wrap input:focus { border-color: var(--accent); }
+  .search-icon {
+    position: absolute; left: 0.8rem; top: 50%; transform: translateY(-50%);
+    color: var(--muted); font-size: 15px; pointer-events: none;
+  }
+  .filter-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .fp {
+    font-size: 0.78rem; font-weight: 500;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 4px 14px;
+    cursor: pointer;
+    transition: all 0.18s;
+    background: transparent;
+    color: var(--muted2);
+    font-family: 'Outfit', sans-serif;
+    white-space: nowrap;
+  }
+  .fp:hover { border-color: var(--border-hover); color: var(--text); }
+  .fp.active { background: var(--accent); border-color: var(--accent); color: #0b0f1a; font-weight: 600; }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 900px;
+    margin: 2rem auto 4rem;
+    padding: 0 1.5rem;
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 2.5rem 0 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ── QUESTION CARD ── */
+  .q-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .q-card:hover { border-color: var(--border-hover); }
+  .q-card.open { border-color: rgba(99,179,237,0.35); }
+
+  .q-header {
+    padding: 1.1rem 1.4rem;
+    cursor: pointer;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    user-select: none;
+  }
+  .q-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    min-width: 24px;
+    margin-top: 3px;
+    flex-shrink: 0;
+  }
+  .q-content { flex: 1; }
+  .q-top { display: flex; align-items: flex-start; gap: 0.75rem; flex-wrap: wrap; }
+  .q-text {
+    font-size: 0.97rem;
+    font-weight: 500;
+    color: var(--text);
+    flex: 1;
+    min-width: 200px;
+  }
+  .q-meta { display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; margin-top: 0.4rem; }
+
+  .tag {
+    font-size: 0.7rem;
+    font-weight: 500;
+    border-radius: 100px;
+    padding: 2px 10px;
+    font-family: 'DM Mono', monospace;
+    flex-shrink: 0;
+  }
+  .tag-sql    { background: var(--pill-sql);  color: var(--pill-sql-t); }
+  .tag-stat   { background: var(--pill-stat); color: var(--pill-stat-t); }
+  .tag-tool   { background: var(--pill-tool); color: var(--pill-tool-t); }
+  .tag-biz    { background: var(--pill-biz);  color: var(--pill-biz-t); }
+  .tag-viz    { background: var(--pill-viz);  color: var(--pill-viz-t); }
+  .tag-beh    { background: var(--pill-beh);  color: var(--pill-beh-t); }
+
+  .diff {
+    font-size: 0.68rem;
+    font-weight: 600;
+    border-radius: 100px;
+    padding: 2px 9px;
+    font-family: 'DM Mono', monospace;
+    flex-shrink: 0;
+  }
+  .diff-easy { background: rgba(72,187,120,0.12); color: #68d391; }
+  .diff-med  { background: rgba(246,173,85,0.12);  color: #f6ad55; }
+
+  .chevron {
+    color: var(--muted);
+    font-size: 18px;
+    margin-top: 1px;
+    flex-shrink: 0;
+    transition: transform 0.25s;
+  }
+  .q-card.open .chevron { transform: rotate(180deg); color: var(--accent); }
+
+  /* ── ANSWER ── */
+  .q-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1);
+  }
+  .q-card.open .q-answer { max-height: 800px; }
+
+  .q-answer-inner {
+    border-top: 1px solid var(--border);
+    padding: 1.2rem 1.4rem 1.4rem;
+    margin-left: 2.5rem;
+  }
+  .answer-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--correct);
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .answer-label::before {
+    content: '';
+    display: inline-block;
+    width: 6px; height: 6px;
+    background: var(--correct);
+    border-radius: 50%;
+  }
+  .q-answer-inner p {
+    font-size: 0.91rem;
+    color: var(--muted2);
+    line-height: 1.75;
+    margin-bottom: 0.5rem;
+  }
+  .q-answer-inner p:last-child { margin-bottom: 0; }
+  .q-answer-inner strong { color: var(--text); font-weight: 500; }
+  .q-answer-inner code {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.82rem;
+    background: rgba(99,179,237,0.1);
+    color: var(--accent);
+    border-radius: 4px;
+    padding: 1px 6px;
+  }
+  pre {
+    background: #0d1321;
+    border: 1px solid rgba(99,179,237,0.12);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    margin: 0.8rem 0;
+    overflow-x: auto;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.82rem;
+    color: #a9d4f5;
+    line-height: 1.6;
+  }
+  pre .kw { color: #b48efe; }
+  pre .fn { color: #79dcaa; }
+  pre .str { color: #f6c177; }
+  pre .cm { color: #4a5568; }
+
+  /* ── TIP BOX ── */
+  .tip {
+    background: rgba(99,179,237,0.06);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 0.7rem 1rem;
+    margin-top: 0.8rem;
+    font-size: 0.85rem;
+    color: var(--muted2);
+  }
+  .tip strong { color: var(--accent); }
+
+  /* ── NO RESULTS ── */
+  #no-results {
+    text-align: center;
+    padding: 4rem 2rem;
+    display: none;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  @media (max-width: 600px) {
+    .stats-bar { gap: 1.2rem; }
+    .q-answer-inner { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-tag">Interview Prep · Entry Level</div>
+  <h1>Data Analyst<br><em>Interview Questions</em></h1>
+  <p>40 curated questions with model answers across SQL, statistics, tools, business acumen, and more.</p>
+  <div class="stats-bar">
+    <div class="stat"><span class="stat-num" id="total-q">40</span><span class="stat-label">Questions</span></div>
+    <div class="stat"><span class="stat-num">6</span><span class="stat-label">Topics</span></div>
+    <div class="stat"><span class="stat-num">2</span><span class="stat-label">Difficulty Levels</span></div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="search-wrap">
+    <span class="search-icon">⌕</span>
+    <input type="text" id="search" placeholder="Search questions…" autocomplete="off" />
+  </div>
+  <div class="filter-pills">
+    <button class="fp active" data-cat="all">All</button>
+    <button class="fp" data-cat="sql">SQL</button>
+    <button class="fp" data-cat="stat">Statistics</button>
+    <button class="fp" data-cat="tool">Tools</button>
+    <button class="fp" data-cat="biz">Business</button>
+    <button class="fp" data-cat="viz">Visualisation</button>
+    <button class="fp" data-cat="beh">Behavioural</button>
+  </div>
+</div>
+
+<main id="main">
+  <div id="no-results">No questions match your search. Try a different term or category.</div>
+</main>
+
+<footer>
+  Built for job seekers in Data Analytics ·
+  <a href="https://github.com" target="_blank">View on GitHub</a>
+</footer>
+
+<script>
+const questions = [
+  /* ── SQL ── */
+  {
+    cat: "sql", diff: "easy",
+    q: "What is the difference between WHERE and HAVING in SQL?",
+    a: `<p><strong>WHERE</strong> filters rows <em>before</em> any aggregation takes place, while <strong>HAVING</strong> filters <em>after</em> aggregation — it works on grouped results.</p>
+<pre><span class="kw">SELECT</span> department, <span class="fn">COUNT</span>(*) <span class="kw">AS</span> headcount
+<span class="kw">FROM</span>   employees
+<span class="kw">WHERE</span>  status = <span class="str">'active'</span>         <span class="cm">-- filters rows first</span>
+<span class="kw">GROUP BY</span> department
+<span class="kw">HAVING</span> <span class="fn">COUNT</span>(*) > 5;           <span class="cm">-- filters groups after</span></pre>
+<div class="tip"><strong>Tip:</strong> A common interview mistake is using WHERE on an aggregate like <code>COUNT(*)</code>. Always use HAVING for post-aggregation conditions.</div>`
+  },
+  {
+    cat: "sql", diff: "easy",
+    q: "Explain the difference between INNER JOIN, LEFT JOIN, and FULL OUTER JOIN.",
+    a: `<p><strong>INNER JOIN</strong> returns only rows that match in both tables. <strong>LEFT JOIN</strong> returns all rows from the left table and matched rows from the right (NULLs where no match). <strong>FULL OUTER JOIN</strong> returns all rows from both tables, with NULLs where matches are missing.</p>
+<p>Think of Venn diagrams: INNER = intersection; LEFT = left circle + intersection; FULL OUTER = entire union.</p>
+<div class="tip"><strong>Tip:</strong> Mention that LEFT JOIN is the most commonly used JOIN in analytics because you want to keep all customers/orders even when related data is missing.</div>`
+  },
+  {
+    cat: "sql", diff: "easy",
+    q: "What are aggregate functions? Name five common ones.",
+    a: `<p>Aggregate functions perform a calculation on a set of rows and return a single value. Common examples: <code>COUNT()</code>, <code>SUM()</code>, <code>AVG()</code>, <code>MIN()</code>, <code>MAX()</code>. They are almost always paired with <code>GROUP BY</code>.</p>
+<pre><span class="kw">SELECT</span> region,
+       <span class="fn">SUM</span>(revenue)   <span class="kw">AS</span> total_rev,
+       <span class="fn">AVG</span>(revenue)   <span class="kw">AS</span> avg_rev,
+       <span class="fn">COUNT</span>(*)       <span class="kw">AS</span> orders
+<span class="kw">FROM</span>   sales
+<span class="kw">GROUP BY</span> region;</pre>`
+  },
+  {
+    cat: "sql", diff: "med",
+    q: "What is a window function and when would you use one?",
+    a: `<p>A window function performs a calculation across a set of rows <em>related to the current row</em> without collapsing the result set. Unlike aggregates, you can still see individual rows.</p>
+<pre><span class="kw">SELECT</span> name, salary,
+       <span class="fn">RANK</span>() <span class="kw">OVER</span> (<span class="kw">PARTITION BY</span> dept <span class="kw">ORDER BY</span> salary <span class="kw">DESC</span>) <span class="kw">AS</span> rnk,
+       <span class="fn">AVG</span>(salary) <span class="kw">OVER</span> (<span class="kw">PARTITION BY</span> dept) <span class="kw">AS</span> dept_avg
+<span class="kw">FROM</span>   employees;</pre>
+<p>Use cases: running totals, rolling averages, ranking within a group, comparing a row to its cohort average.</p>`
+  },
+  {
+    cat: "sql", diff: "easy",
+    q: "How do you handle NULL values in SQL?",
+    a: `<p>NULLs represent missing or unknown data. Key points: <code>NULL ≠ NULL</code> — you must use <code>IS NULL</code> / <code>IS NOT NULL</code>, not <code>= NULL</code>.</p>
+<p>Use <code>COALESCE(col, default_val)</code> to replace NULLs with a fallback, or <code>ISNULL()</code> / <code>NVL()</code> depending on the database.</p>
+<div class="tip"><strong>Tip:</strong> Explain that NULLs can silently affect aggregates — <code>AVG()</code> ignores NULLs, which can skew results if you expect zeros instead.</div>`
+  },
+  {
+    cat: "sql", diff: "med",
+    q: "What is the difference between UNION and UNION ALL?",
+    a: `<p><strong>UNION</strong> combines result sets from two queries and <em>removes duplicates</em>. <strong>UNION ALL</strong> combines them and <em>keeps all rows including duplicates</em>.</p>
+<p>UNION ALL is faster because it skips the deduplication step. Use UNION when you explicitly need unique rows; use UNION ALL when duplicates are expected or performance matters.</p>`
+  },
+  {
+    cat: "sql", diff: "med",
+    q: "How would you find duplicate records in a table?",
+    a: `<p>Group by the column(s) that define uniqueness, then filter for groups with a count greater than one.</p>
+<pre><span class="kw">SELECT</span> email, <span class="fn">COUNT</span>(*) <span class="kw">AS</span> cnt
+<span class="kw">FROM</span>   customers
+<span class="kw">GROUP BY</span> email
+<span class="kw">HAVING</span> <span class="fn">COUNT</span>(*) > 1;</pre>
+<div class="tip"><strong>Tip:</strong> Mention that to <em>delete</em> duplicates you'd typically use a CTE with <code>ROW_NUMBER()</code> to keep one row per group and delete the rest.</div>`
+  },
+
+  /* ── STATISTICS ── */
+  {
+    cat: "stat", diff: "easy",
+    q: "What is the difference between mean, median, and mode?",
+    a: `<p><strong>Mean</strong> is the arithmetic average — sum divided by count. <strong>Median</strong> is the middle value when data is sorted. <strong>Mode</strong> is the most frequently occurring value.</p>
+<p>The median is more robust to outliers. For example, in a salary dataset with a few very high earners, the median gives a better sense of the "typical" salary than the mean.</p>`
+  },
+  {
+    cat: "stat", diff: "easy",
+    q: "What is standard deviation and why does it matter in data analysis?",
+    a: `<p>Standard deviation measures the spread of data around the mean. A low SD means data points cluster close to the mean; a high SD means they're spread out.</p>
+<p>It matters because it tells you about variability and consistency. For example, two products might have the same average revenue but very different volatility — knowing the SD helps you assess risk and reliability.</p>`
+  },
+  {
+    cat: "stat", diff: "med",
+    q: "Explain the difference between correlation and causation.",
+    a: `<p><strong>Correlation</strong> means two variables move together — but one does not necessarily cause the other. <strong>Causation</strong> means one variable directly causes a change in another.</p>
+<p>Classic example: ice cream sales and drowning rates are positively correlated — both increase in summer — but ice cream does not cause drowning. The confounding variable is hot weather.</p>
+<div class="tip"><strong>Tip:</strong> In an interview, mention that proving causation usually requires controlled experiments or natural experiments (A/B tests), not just observational data.</div>`
+  },
+  {
+    cat: "stat", diff: "med",
+    q: "What is a p-value and how would you explain it to a non-technical stakeholder?",
+    a: `<p>A p-value is the probability of observing your data (or something more extreme) if there were actually no real effect — i.e. if the null hypothesis were true.</p>
+<p>For a stakeholder: "Imagine your test result happened purely by chance. The p-value tells you how often that would happen. A p-value of 0.03 means a 3% chance it's random noise — low enough that most analysts treat the result as meaningful."</p>`
+  },
+  {
+    cat: "stat", diff: "easy",
+    q: "What is an outlier, and how do you detect and handle it?",
+    a: `<p>An outlier is a data point significantly different from the rest. Detection methods: the <strong>IQR method</strong> (points below Q1 − 1.5×IQR or above Q3 + 1.5×IQR), Z-scores (|Z| > 3), or visual inspection via box plots and scatter plots.</p>
+<p>Handling depends on context: investigate the cause first. Outliers may be data errors (remove/correct them), legitimate extremes (cap or transform), or the most interesting data points in the set.</p>`
+  },
+  {
+    cat: "stat", diff: "med",
+    q: "What is the central limit theorem and why is it useful?",
+    a: `<p>The CLT states that the distribution of sample means approaches a normal distribution as sample size increases, regardless of the underlying population distribution (given sufficient n, typically ≥30).</p>
+<p>This is foundational for hypothesis testing and confidence intervals — it lets us apply normal distribution math even when the raw data isn't normally distributed.</p>`
+  },
+  {
+    cat: "stat", diff: "easy",
+    q: "What is the difference between a population and a sample?",
+    a: `<p>A <strong>population</strong> is the entire group you want to draw conclusions about. A <strong>sample</strong> is a subset of that population you actually collect data from.</p>
+<p>Because collecting data on an entire population is often impractical, analysts work with samples and use statistical inference to generalise conclusions. The key concern is that the sample must be <strong>representative</strong> — random sampling helps achieve this.</p>`
+  },
+
+  /* ── TOOLS ── */
+  {
+    cat: "tool", diff: "easy",
+    q: "What is the difference between Excel and Python/pandas for data analysis?",
+    a: `<p><strong>Excel</strong> is excellent for quick, ad-hoc analysis, pivot tables, and sharing with non-technical users. It has a low learning curve and a familiar UI.</p>
+<p><strong>Python/pandas</strong> excels at handling large datasets (millions of rows), automating repetitive workflows, reproducibility, and complex transformations that would be error-prone in Excel.</p>
+<div class="tip"><strong>Tip:</strong> Show you know both — mention Excel for business communication and Python for scalable, repeatable pipelines.</div>`
+  },
+  {
+    cat: "tool", diff: "easy",
+    q: "What is pandas and what are its two main data structures?",
+    a: `<p>Pandas is a Python library built for data manipulation and analysis. Its two core structures are the <strong>Series</strong> (one-dimensional labelled array) and the <strong>DataFrame</strong> (two-dimensional table of rows and columns).</p>
+<p>You can think of a DataFrame as a Python equivalent of an Excel spreadsheet or a SQL table — it is the most-used object in data analytics workflows.</p>`
+  },
+  {
+    cat: "tool", diff: "easy",
+    q: "How do you handle missing data in a pandas DataFrame?",
+    a: `<p>Common approaches: <code>df.isnull().sum()</code> to detect missing values, <code>df.dropna()</code> to remove rows/columns with NaNs, and <code>df.fillna(value)</code> to impute with a constant, mean, median, or forward-fill.</p>
+<p>The right approach depends on the cause and volume of missingness — dropping rows is only safe if missingness is random and small. Otherwise imputation or flagging is preferred.</p>`
+  },
+  {
+    cat: "tool", diff: "easy",
+    q: "What is a pivot table and when would you use one?",
+    a: `<p>A pivot table summarises data by grouping rows into categories and computing aggregate values (sum, count, average) across them. You use them to quickly answer questions like "What are total sales by region and product category?"</p>
+<p>In Excel this is a built-in feature. In Python: <code>df.pivot_table(values='revenue', index='region', columns='product', aggfunc='sum')</code>.</p>`
+  },
+  {
+    cat: "tool", diff: "med",
+    q: "What is the difference between Tableau, Power BI, and Looker?",
+    a: `<p>All three are BI (Business Intelligence) and data visualisation platforms, but they differ in ecosystem and strength.</p>
+<p><strong>Tableau</strong> is known for powerful drag-and-drop visualisations and flexibility; traditionally desktop-first. <strong>Power BI</strong> is Microsoft's offering, deeply integrated with Azure and Office 365 — the default in many corporate environments. <strong>Looker</strong> (now Google Cloud) is model-driven, centred on a semantic layer (LookML), making it popular in data-engineering-heavy teams.</p>`
+  },
+  {
+    cat: "tool", diff: "easy",
+    q: "What is version control and why should a data analyst use Git?",
+    a: `<p>Version control tracks changes to files over time, letting you revert to earlier states, collaborate without conflicts, and document your thought process.</p>
+<p>For data analysts, Git is valuable for versioning SQL scripts, Python notebooks, and documentation. It enables reproducibility — a colleague or interviewer can clone your repo and run the same analysis — and is expected in modern data roles.</p>
+<div class="tip"><strong>Tip:</strong> Mention a GitHub portfolio project you've worked on to demonstrate this in practice.</div>`
+  },
+
+  /* ── BUSINESS ── */
+  {
+    cat: "biz", diff: "easy",
+    q: "What is a KPI and how do you choose the right one for a business problem?",
+    a: `<p>A KPI (Key Performance Indicator) is a measurable value that shows how effectively a business is achieving a specific objective.</p>
+<p>To choose the right KPI: first clarify the <em>decision</em> the metric will inform, ensure it is measurable and actionable, and make sure it is aligned with the strategic goal. Avoid vanity metrics — page views or follower counts that look impressive but don't drive decisions.</p>`
+  },
+  {
+    cat: "biz", diff: "easy",
+    q: "Explain customer churn and how you would measure it.",
+    a: `<p>Churn is the percentage of customers who stop using a product or service in a given period. Basic formula: <strong>Churn Rate = (Lost Customers ÷ Customers at Start of Period) × 100</strong>.</p>
+<p>You might also track revenue churn (lost MRR), cohort retention curves, or time-to-churn. A rising churn rate signals problems with product-market fit, support, or pricing.</p>`
+  },
+  {
+    cat: "biz", diff: "med",
+    q: "What is A/B testing and what are the key steps to run one correctly?",
+    a: `<p>A/B testing is a controlled experiment where users are randomly split into two groups — control (A) and treatment (B) — to measure the causal effect of a change.</p>
+<p>Key steps: (1) define a clear hypothesis and primary metric; (2) calculate required sample size for statistical power; (3) randomly assign users; (4) run the test for a pre-determined duration; (5) analyse results with a significance test; (6) check for novelty effects and segment differences before concluding.</p>`
+  },
+  {
+    cat: "biz", diff: "easy",
+    q: "How would you explain a complex data finding to a non-technical manager?",
+    a: `<p>Lead with the business insight, not the methodology. Start with "Here's what this means for the team" before explaining how you found it. Use analogies, round numbers, and visuals rather than statistical jargon.</p>
+<p>Example: instead of "the regression coefficient is 0.73", say "for every £1 extra we spend on email marketing, we see about 73p in additional revenue on average — so it's profitable but not by a huge margin."</p>
+<div class="tip"><strong>Tip:</strong> Mention the "so what?" framing — every finding should connect to a recommendation or decision.</div>`
+  },
+  {
+    cat: "biz", diff: "med",
+    q: "What is cohort analysis and when is it used?",
+    a: `<p>Cohort analysis groups users by a shared characteristic — typically the time period when they first performed an action (e.g. signed up) — and tracks their behaviour over time.</p>
+<p>It's used to understand retention, lifetime value, and how product changes affect different generations of users. For example, comparing 30-day retention for users who signed up in Q1 vs Q2 reveals whether a product change improved engagement.</p>`
+  },
+  {
+    cat: "biz", diff: "easy",
+    q: "What is the difference between a metric and a dimension?",
+    a: `<p>A <strong>dimension</strong> is a categorical attribute used to slice data — region, product category, date, customer segment. A <strong>metric</strong> (or measure) is a quantitative value you aggregate — revenue, order count, conversion rate.</p>
+<p>In practice: "total revenue <em>(metric)</em> by region <em>(dimension)</em>" — the dimension answers "which group?" and the metric answers "how much?"</p>`
+  },
+
+  /* ── VISUALISATION ── */
+  {
+    cat: "viz", diff: "easy",
+    q: "When would you use a bar chart vs a line chart?",
+    a: `<p>Use a <strong>bar chart</strong> when comparing discrete categories — sales by product, headcount by department. Use a <strong>line chart</strong> when showing change over continuous time — monthly revenue, daily active users.</p>
+<p>The key question is whether the x-axis represents <em>categories</em> (bar) or <em>time/continuous values</em> (line). Mixing them up is a common visualisation error that misleads viewers.</p>`
+  },
+  {
+    cat: "viz", diff: "easy",
+    q: "What are the principles of good data visualisation?",
+    a: `<p>Key principles: <strong>clarity</strong> — one chart should answer one question; <strong>accuracy</strong> — avoid truncated axes or misleading scales; <strong>simplicity</strong> — remove chart junk (unnecessary grid lines, 3D effects, decorations); <strong>context</strong> — add titles, axis labels, units, and data sources; <strong>appropriate chart type</strong> — match the chart to the data relationship.</p>
+<div class="tip"><strong>Tip:</strong> Reference Edward Tufte's concept of the "data-ink ratio" — maximise the proportion of ink that represents actual data.</div>`
+  },
+  {
+    cat: "viz", diff: "easy",
+    q: "What is a heat map and when is it useful?",
+    a: `<p>A heat map uses colour intensity to represent magnitude across a two-dimensional grid. It's useful for showing patterns in large matrices — e.g. website click maps, correlation matrices between variables, or sales by day-of-week and hour.</p>
+<p>Colour choice matters: use a sequential palette (light-to-dark) for one-directional data, and a diverging palette (blue-white-red) when values range from negative to positive.</p>`
+  },
+  {
+    cat: "viz", diff: "med",
+    q: "How would you visualise the distribution of a numerical variable?",
+    a: `<p>The best options are: a <strong>histogram</strong> (shows frequency distribution in bins), a <strong>box plot</strong> (shows median, quartiles, and outliers), or a <strong>density/KDE plot</strong> (smoothed probability distribution).</p>
+<p>Histograms are intuitive for non-technical audiences. Box plots are great for comparing distributions across multiple groups. For skewness and outlier detection, combining a histogram with a box plot above it is very effective.</p>`
+  },
+  {
+    cat: "viz", diff: "easy",
+    q: "What is a scatter plot and when would you use one?",
+    a: `<p>A scatter plot plots two numerical variables on x and y axes, where each point represents a single observation. It is the primary tool for exploring the <em>relationship or correlation</em> between two continuous variables.</p>
+<p>Use it to spot trends (add a trendline), clusters, outliers, or non-linear relationships. Adding a third dimension via colour or size makes it a bubble chart.</p>`
+  },
+
+  /* ── BEHAVIOURAL ── */
+  {
+    cat: "beh", diff: "easy",
+    q: "Tell me about a time you found a meaningful insight from data.",
+    a: `<p>Structure your answer with <strong>STAR</strong>: Situation → Task → Action → Result.</p>
+<p>Example: "During my MSc project, I analysed e-commerce sales data (Situation). I needed to identify the biggest revenue drivers (Task). I used SQL to segment customers by purchase frequency and found that the top 15% of customers generated 60% of revenue, but their repeat-purchase rate was declining (Action). I visualised this with a retention cohort chart and recommended a loyalty programme, which became a key finding in my final report (Result)."</p>
+<div class="tip"><strong>Tip:</strong> Quantify the impact wherever possible. Hiring managers remember numbers.</div>`
+  },
+  {
+    cat: "beh", diff: "easy",
+    q: "How do you prioritise tasks when working on multiple data requests at once?",
+    a: `<p>Acknowledge that competing priorities are normal in analytics. A good answer covers: clarifying urgency vs importance with the requester, communicating timelines proactively, and breaking large tasks into smaller deliverables to provide value early.</p>
+<p>Mention frameworks if relevant: the Eisenhower Matrix (urgent/important quadrants) or simply asking stakeholders "If I can only do one of these today, which moves the needle most for you?"</p>`
+  },
+  {
+    cat: "beh", diff: "easy",
+    q: "Describe a situation where you identified a data quality issue. How did you handle it?",
+    a: `<p>Use STAR: describe finding an anomaly (e.g. duplicate records, unexpected NULLs, suspicious spikes in data), how you investigated root cause, how you communicated it to stakeholders, and what you did to prevent recurrence.</p>
+<p>Key message: good data analysts never silently work around data quality issues — they surface them, document them, and flag the impact on any analysis derived from the affected data.</p>`
+  },
+  {
+    cat: "beh", diff: "easy",
+    q: "How do you stay up to date with developments in data analytics?",
+    a: `<p>Show genuine curiosity: mention specific resources like <strong>Towards Data Science</strong>, the <strong>Data Engineering Weekly</strong> newsletter, <strong>Kaggle</strong> competitions, or YouTube channels. Mention communities on LinkedIn or Reddit (r/datascience).</p>
+<p>If you've recently completed a course, earned a certification, or built a portfolio project using a new tool, mention it — it demonstrates that your learning is applied, not just theoretical.</p>`
+  },
+  {
+    cat: "beh", diff: "med",
+    q: "Tell me about a time your analysis turned out to be wrong. What did you learn?",
+    a: `<p>Interviewers ask this to test intellectual honesty and growth mindset. Pick a genuine example — e.g. a faulty assumption about a join key, or misinterpreting a metric definition.</p>
+<p>Structure: what went wrong, how you discovered it, how you corrected it, and what safeguards you put in place afterwards (peer review, data validation checks, documentation). End on the lesson, not the mistake.</p>
+<div class="tip"><strong>Tip:</strong> Avoid choosing an example where the error had serious consequences. A moderate, professional mistake with a strong recovery story is ideal.</div>`
+  },
+  {
+    cat: "beh", diff: "easy",
+    q: "Why do you want to become a data analyst?",
+    a: `<p>Be authentic and specific. Connect your background to the role — mention the combination of skills you enjoy (logical problem-solving, communication, domain curiosity), a moment when you realised data could answer a real question, and your longer-term ambition.</p>
+<p>Avoid generic answers like "I like numbers." Instead: "I find it genuinely satisfying to take a messy dataset and extract a clear recommendation that someone can act on — bridging the gap between raw data and real-world decisions."</p>`
+  },
+  {
+    cat: "beh", diff: "easy",
+    q: "What does a typical data analysis workflow look like for you?",
+    a: `<p>Walk through the end-to-end process you follow: (1) <strong>Understand the question</strong> — clarify what decision needs to be made; (2) <strong>Acquire and inspect data</strong> — check for quality issues, understand the schema; (3) <strong>Clean and transform</strong> — handle nulls, duplicates, types; (4) <strong>Explore and analyse</strong> — EDA, SQL queries, statistical tests; (5) <strong>Visualise and communicate</strong> — charts, dashboards, narrative; (6) <strong>Validate and iterate</strong> — sense-check results with stakeholders.</p>
+<div class="tip"><strong>Tip:</strong> Mentioning that you document your steps (e.g. in a notebook or README) signals professionalism and reproducibility.</div>`
+  },
+];
+
+const catLabels = {
+  sql: "SQL", stat: "Statistics", tool: "Tools",
+  biz: "Business", viz: "Visualisation", beh: "Behavioural"
+};
+
+const sections = {};
+questions.forEach((q, i) => {
+  if (!sections[q.cat]) sections[q.cat] = [];
+  sections[q.cat].push({ ...q, idx: i + 1 });
+});
+
+document.getElementById("total-q").textContent = questions.length;
+
+function render(cat, search) {
+  const main = document.getElementById("main");
+  main.querySelectorAll(".section-wrap").forEach(e => e.remove());
+  document.getElementById("no-results").style.display = "none";
+
+  const st = search ? search.toLowerCase() : "";
+  let total = 0;
+
+  const order = ["sql", "stat", "tool", "biz", "viz", "beh"];
+  order.forEach(c => {
+    if (cat !== "all" && cat !== c) return;
+    const qs = (sections[c] || []).filter(q =>
+      !st || q.q.toLowerCase().includes(st) || q.a.toLowerCase().includes(st)
+    );
+    if (!qs.length) return;
+    total += qs.length;
+
+    const wrap = document.createElement("div");
+    wrap.className = "section-wrap";
+    wrap.setAttribute("data-cat", c);
+
+    const title = document.createElement("div");
+    title.className = "section-title";
+    title.textContent = catLabels[c];
+    wrap.appendChild(title);
+
+    qs.forEach(q => {
+      const card = document.createElement("div");
+      card.className = "q-card";
+      card.setAttribute("data-cat", c);
+      card.innerHTML = `
+        <div class="q-header" role="button" tabindex="0" aria-expanded="false">
+          <span class="q-num">#${String(q.idx).padStart(2,"0")}</span>
+          <div class="q-content">
+            <div class="q-top">
+              <span class="q-text">${q.q}</span>
+              <span class="chevron">⌄</span>
+            </div>
+            <div class="q-meta">
+              <span class="tag tag-${c}">${catLabels[c]}</span>
+              <span class="diff diff-${q.diff === "easy" ? "easy" : "med"}">${q.diff === "easy" ? "Beginner" : "Intermediate"}</span>
+            </div>
+          </div>
+        </div>
+        <div class="q-answer" aria-hidden="true">
+          <div class="q-answer-inner">
+            <div class="answer-label">Model Answer</div>
+            ${q.a}
+          </div>
+        </div>
+      `;
+
+      const header = card.querySelector(".q-header");
+      header.addEventListener("click", () => {
+        const isOpen = card.classList.contains("open");
+        card.classList.toggle("open", !isOpen);
+        header.setAttribute("aria-expanded", String(!isOpen));
+        card.querySelector(".q-answer").setAttribute("aria-hidden", String(isOpen));
+      });
+      header.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); header.click(); } });
+
+      wrap.appendChild(card);
+    });
+
+    main.appendChild(wrap);
+  });
+
+  if (total === 0) document.getElementById("no-results").style.display = "block";
+}
+
+let currentCat = "all";
+let searchVal = "";
+
+document.querySelectorAll(".fp").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".fp").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    currentCat = btn.dataset.cat;
+    render(currentCat, searchVal);
+  });
+});
+
+document.getElementById("search").addEventListener("input", e => {
+  searchVal = e.target.value;
+  render(currentCat, searchVal);
+});
+
+render("all", "");
+</script>
+</body>
+</html>
