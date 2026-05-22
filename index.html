@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Data Analyst Interview Prep</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0b0f1a;--card:#141c2e;--border:rgba(99,179,237,0.15);
+  --border-h:rgba(99,179,237,0.4);--accent:#63b3ed;--accent2:#4fd1c5;
+  --text:#e2e8f0;--muted:#718096;--muted2:#a0aec0;--green:#48bb78;
+}
+body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;line-height:1.7;min-height:100vh}
+header{background:linear-gradient(135deg,#0d1b35,#0b1628);border-bottom:1px solid var(--border);padding:3rem 2rem 2rem;text-align:center}
+header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 0%,rgba(99,179,237,0.07),transparent 70%);pointer-events:none}
+header{position:relative;overflow:hidden}
+.badge{display:inline-block;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);background:rgba(79,209,197,.1);border:1px solid rgba(79,209,197,.25);border-radius:100px;padding:4px 14px;margin-bottom:1rem}
+h1{font-family:'DM Serif Display',serif;font-size:clamp(2rem,5vw,3rem);color:#fff;margin-bottom:.6rem}
+h1 em{font-style:italic;color:var(--accent)}
+header p{color:var(--muted2);max-width:500px;margin:0 auto 1.5rem}
+.stats{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap}
+.stat .n{font-family:'DM Mono',monospace;font-size:1.4rem;color:var(--accent);display:block}
+.stat .l{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.controls{max-width:900px;margin:1.8rem auto 0;padding:0 1.5rem;display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+.sw{flex:1;min-width:200px;position:relative}
+.sw input{width:100%;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.55rem 1rem .55rem 2.4rem;color:var(--text);font-family:'Outfit',sans-serif;font-size:.88rem;outline:none;transition:border .2s}
+.sw input:focus{border-color:var(--accent)}
+.si{position:absolute;left:.75rem;top:50%;transform:translateY(-50%);color:var(--muted);font-size:14px}
+.pills{display:flex;flex-wrap:wrap;gap:.4rem}
+.fp{font-size:.75rem;font-weight:500;border:1px solid var(--border);border-radius:100px;padding:4px 13px;cursor:pointer;background:transparent;color:var(--muted2);font-family:'Outfit',sans-serif;transition:all .18s}
+.fp:hover{border-color:var(--border-h);color:var(--text)}
+.fp.on{background:var(--accent);border-color:var(--accent);color:#0b0f1a;font-weight:600}
+.rbar{max-width:900px;margin:.8rem auto 0;padding:0 1.5rem;font-size:.77rem;color:var(--muted);font-family:'DM Mono',monospace}
+main{max-width:900px;margin:1.5rem auto 4rem;padding:0 1.5rem}
+.sec-title{font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:2rem 0 .8rem;display:flex;align-items:center;gap:.6rem}
+.sec-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:.65rem;overflow:hidden;transition:border-color .2s}
+.card:hover{border-color:var(--border-h)}
+.card.open{border-color:rgba(99,179,237,.35)}
+.ch{padding:.9rem 1.2rem;cursor:pointer;display:flex;gap:.8rem;align-items:flex-start;user-select:none}
+.qn{font-family:'DM Mono',monospace;font-size:.68rem;color:var(--muted);min-width:26px;margin-top:2px;flex-shrink:0}
+.qb{flex:1}
+.qt{display:flex;align-items:flex-start;gap:.6rem;flex-wrap:wrap}
+.qtxt{font-size:.93rem;font-weight:500;flex:1;min-width:160px}
+.meta{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.35rem}
+.tag{font-size:.65rem;font-weight:500;border-radius:100px;padding:2px 9px;font-family:'DM Mono',monospace}
+.t-sql{background:rgba(99,179,237,.12);color:#90cdf4}
+.t-py{background:rgba(255,183,77,.12);color:#ffcc80}
+.t-stat{background:rgba(79,209,197,.12);color:#81e6d9}
+.t-xl{background:rgba(102,187,106,.12);color:#a5d6a7}
+.t-ml{background:rgba(240,98,146,.12);color:#f48fb1}
+.t-dc{background:rgba(255,138,101,.12);color:#ffab91}
+.t-cl{background:rgba(100,181,246,.12);color:#90caf9}
+.t-viz{background:rgba(252,129,129,.12);color:#feb2b2}
+.t-biz{background:rgba(182,121,255,.12);color:#d6bcfa}
+.t-tool{background:rgba(246,173,85,.12);color:#fbd38d}
+.t-beh{background:rgba(104,211,145,.12);color:#9ae6b4}
+.t-xl{background:rgba(102,187,106,.12);color:#a5d6a7}
+.t-ml{background:rgba(240,98,146,.12);color:#f48fb1}
+.t-dc{background:rgba(255,138,101,.12);color:#ffab91}
+.t-cl{background:rgba(100,181,246,.12);color:#90caf9}
+.t-viz{background:rgba(252,129,129,.12);color:#feb2b2}
+.t-biz{background:rgba(182,121,255,.12);color:#d6bcfa}
+.t-tool{background:rgba(246,173,85,.12);color:#fbd38d}
+.diff{font-size:.65rem;font-weight:600;border-radius:100px;padding:2px 8px;font-family:'DM Mono',monospace}
+.d-easy{background:rgba(72,187,120,.12);color:#68d391}
+.d-med{background:rgba(246,173,85,.12);color:#f6ad55}
+.chev{color:var(--muted);font-size:16px;margin-top:1px;flex-shrink:0;transition:transform .25s}
+.card.open .chev{transform:rotate(180deg);color:var(--accent)}
+.ans{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.4,0,.2,1)}
+.card.open .ans{max-height:900px}
+.ans-inner{border-top:1px solid var(--border);padding:1rem 1.2rem 1.2rem;margin-left:2.2rem}
+.albl{font-family:'DM Mono',monospace;font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;color:var(--green);margin-bottom:.5rem;display:flex;align-items:center;gap:5px}
+.albl::before{content:'';display:inline-block;width:5px;height:5px;background:var(--green);border-radius:50%}
+.ans-inner p{font-size:.88rem;color:var(--muted2);line-height:1.75;margin-bottom:.4rem}
+.ans-inner p:last-child{margin:0}
+.ans-inner strong{color:var(--text);font-weight:500}
+.ans-inner code{font-family:'DM Mono',monospace;font-size:.8rem;background:rgba(99,179,237,.1);color:var(--accent);border-radius:4px;padding:1px 5px}
+pre{background:#0d1321;border:1px solid rgba(99,179,237,.12);border-radius:8px;padding:.8rem 1rem;margin:.6rem 0;overflow-x:auto;font-family:'DM Mono',monospace;font-size:.79rem;color:#a9d4f5;line-height:1.55}
+pre .k{color:#b48efe}pre .f{color:#79dcaa}pre .s{color:#f6c177}
+.tip{background:rgba(99,179,237,.06);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;padding:.6rem .9rem;margin-top:.6rem;font-size:.83rem;color:var(--muted2)}
+.tip strong{color:var(--accent)}
+#no-r{text-align:center;padding:3rem;display:none;color:var(--muted)}
+.pg{display:flex;gap:.4rem;justify-content:center;flex-wrap:wrap;margin:1.5rem 0}
+.pb{font-family:'DM Mono',monospace;font-size:.75rem;background:var(--card);border:1px solid var(--border);color:var(--muted2);border-radius:7px;padding:5px 12px;cursor:pointer;transition:all .18s}
+.pb:hover{border-color:var(--border-h);color:var(--text)}
+.pb.on{background:var(--accent);border-color:var(--accent);color:#0b0f1a;font-weight:600}
+footer{text-align:center;padding:1.5rem;border-top:1px solid var(--border);color:var(--muted);font-size:.78rem}
+@media(max-width:580px){.stats{gap:1rem}.ans-inner{margin-left:0}}
+</style>
+</head>
+<body>
+<header>
+  <div class="badge">Interview Prep &middot; Entry Level</div>
+  <h1>Data Analyst<br><em>Interview Questions</em></h1>
+  <p>Curated questions with model answers. More topics added regularly.</p>
+  <div class="stats">
+    <div class="stat"><span class="n" id="tq">300</span><span class="l">Questions</span></div>
+    <div class="stat"><span class="n">11</span><span class="l">Topics</span></div>
+    <div class="stat"><span class="n" id="vq">300</span><span class="l">Shown</span></div>
+  </div>
+</header>
+<div class="controls">
+  <div class="sw"><span class="si">&#9906;</span>
+    <input type="text" id="srch" placeholder="Search questions..." autocomplete="off"/>
+  </div>
+  <div class="pills">
+    <button class="fp on" data-c="all">All</button>
+    <button class="fp" data-c="sql">SQL</button>
+    <button class="fp" data-c="py">Python</button>
+    <button class="fp" data-c="stat">Statistics</button>
+    <button class="fp" data-c="xl">Excel</button>
+    <button class="fp" data-c="ml">Machine Learning</button>
+    <button class="fp" data-c="dc">Data Cleaning</button>
+    <button class="fp" data-c="cl">Cloud</button>
+    <button class="fp" data-c="viz">Visualisation</button>
+    <button class="fp" data-c="biz">Business</button>
+    <button class="fp" data-c="tool">Tools</button>
+    <button class="fp" data-c="beh">Behavioural</button>
+  </div>
+</div>
+<div class="rbar" id="rbar"></div>
+<main id="main"><div id="no-r">No questions match. Try a different search or category.</div></main>
+<div class="pg" id="pg"></div>
+<footer>Built for Data Analytics job seekers &mdash; more topics coming soon</footer>
+<script>
+const CL={sql:"SQL",py:"Python",stat:"Statistics",xl:"Excel",ml:"Machine Learning",dc:"Data Cleaning",cl:"Cloud",viz:"Visualisation",biz:"Business",tool:"Tools",beh:"Behavioural"};
+const Q=[
+{c:"sql",d:"easy",q:'What is SQL and what is it used for?',a:`<p><strong>SQL</strong> (Structured Query Language) is the standard language for querying and managing relational databases. In data analytics it is used to extract, filter, aggregate, join, and transform data. It is one of the most essential skills for any analyst role.</p>`},
+{c:"sql",d:"easy",q:'Difference between WHERE and HAVING?',a:`<p><strong>WHERE</strong> filters rows before aggregation. <strong>HAVING</strong> filters after. Use HAVING when your condition involves an aggregate like COUNT or SUM.</p><pre><span class="k">SELECT</span> dept, <span class="f">COUNT</span>(*) <span class="k">AS</span> cnt <span class="k">FROM</span> employees <span class="k">GROUP BY</span> dept <span class="k">HAVING</span> <span class="f">COUNT</span>(*) &gt; 5;</pre>`},
+{c:"sql",d:"easy",q:'Explain INNER JOIN, LEFT JOIN, and FULL OUTER JOIN.',a:`<p><strong>INNER JOIN</strong>: only matching rows from both tables. <strong>LEFT JOIN</strong>: all left-table rows plus matches (NULLs where no match). <strong>FULL OUTER JOIN</strong>: all rows from both tables regardless of match.</p>`},
+{c:"sql",d:"easy",q:'What are aggregate functions? Give five examples.',a:`<p>Compute a single result from multiple rows: <code>COUNT()</code>, <code>SUM()</code>, <code>AVG()</code>, <code>MIN()</code>, <code>MAX()</code>. Always used with GROUP BY.</p>`},
+{c:"sql",d:"easy",q:'Difference between DELETE, TRUNCATE, and DROP?',a:`<p><strong>DELETE</strong>: removes specific rows, uses WHERE, is logged. <strong>TRUNCATE</strong>: removes all rows fast with minimal logging. <strong>DROP</strong>: removes the entire table structure and data permanently.</p>`},
+{c:"sql",d:"easy",q:'What is a PRIMARY KEY?',a:`<p>Uniquely identifies each row. Cannot be NULL. Each table has only one primary key (can be composite — multiple columns).</p>`},
+{c:"sql",d:"easy",q:'What is a FOREIGN KEY?',a:`<p>References the primary key of another table, enforcing referential integrity — foreign key values must exist in the referenced table.</p>`},
+{c:"sql",d:"easy",q:'What does GROUP BY do?',a:`<p>Groups rows sharing the same value so aggregate functions apply per group. Every non-aggregate SELECT column must appear in GROUP BY.</p>`},
+{c:"sql",d:"easy",q:'What is a CTE and why is it useful?',a:`<p>A CTE (Common Table Expression) is a named temporary result defined with <code>WITH</code>. Improves readability and avoids repeating logic.</p><pre><span class="k">WITH</span> top_c <span class="k">AS</span> (<span class="k">SELECT</span> id, <span class="f">SUM</span>(spend) s <span class="k">FROM</span> orders <span class="k">GROUP BY</span> id)
+<span class="k">SELECT</span> * <span class="k">FROM</span> top_c <span class="k">WHERE</span> s &gt; 1000;</pre>`},
+{c:"sql",d:"easy",q:'Difference between UNION and UNION ALL?',a:`<p><strong>UNION</strong>: combines result sets and removes duplicates (slower). <strong>UNION ALL</strong>: keeps all rows including duplicates (faster). Use UNION ALL unless deduplication is required.</p>`},
+{c:"sql",d:"easy",q:'What is a window function?',a:`<p>Performs a calculation across related rows without collapsing the result. Examples: <code>ROW_NUMBER()</code>, <code>RANK()</code>, <code>SUM() OVER()</code>, <code>LAG()</code>.</p>`},
+{c:"sql",d:"easy",q:'Difference between RANK() and DENSE_RANK()?',a:`<p><strong>RANK()</strong> skips numbers after ties: 1,2,2,4. <strong>DENSE_RANK()</strong> does not skip: 1,2,2,3. Use DENSE_RANK for consecutive rankings with no gaps.</p>`},
+{c:"sql",d:"easy",q:'What is ROW_NUMBER()?',a:`<p>Assigns a unique sequential integer to each row within a partition. Unlike RANK, no ties — each row gets a distinct number.</p>`},
+{c:"sql",d:"easy",q:'What is a view?',a:`<p>A saved SQL query as a virtual table. Does not store data — querying it reruns the underlying query. Simplifies complex queries and provides access control.</p>`},
+{c:"sql",d:"easy",q:'How do you find duplicate records?',a:`<p>Group by the uniqueness columns and filter for count > 1.</p><pre><span class="k">SELECT</span> email, <span class="f">COUNT</span>(*) <span class="k">FROM</span> users <span class="k">GROUP BY</span> email <span class="k">HAVING</span> <span class="f">COUNT</span>(*) &gt; 1;</pre>`},
+{c:"sql",d:"easy",q:'What is CASE WHEN?',a:`<p>SQL's conditional expression (if-else). Evaluates conditions in order and returns the first match.</p><pre><span class="k">CASE WHEN</span> score &gt;= 90 <span class="k">THEN</span> <span class="s">'A'</span> <span class="k">WHEN</span> score &gt;= 70 <span class="k">THEN</span> <span class="s">'B'</span> <span class="k">ELSE</span> <span class="s">'C'</span> <span class="k">END</span></pre>`},
+{c:"sql",d:"easy",q:'What does COALESCE do?',a:`<p>Returns the first non-NULL value from its argument list. Useful for providing fallbacks when a column may be NULL.</p><pre><span class="k">SELECT</span> <span class="f">COALESCE</span>(phone, email, <span class="s">'No contact'</span>) <span class="k">FROM</span> users;</pre>`},
+{c:"sql",d:"easy",q:'What is the SQL clause execution order?',a:`<p>FROM → JOIN → WHERE → GROUP BY → HAVING → SELECT → DISTINCT → ORDER BY → LIMIT. This is why SELECT aliases cannot be used in WHERE.</p>`},
+{c:"sql",d:"easy",q:'How do you calculate a running total?',a:`<p>Use SUM with ORDER BY inside OVER:</p><pre><span class="k">SELECT</span> date, rev, <span class="f">SUM</span>(rev) <span class="k">OVER</span>(<span class="k">ORDER BY</span> date) <span class="k">AS</span> running_total <span class="k">FROM</span> sales;</pre>`},
+{c:"sql",d:"easy",q:'What is a star schema?',a:`<p>A data warehouse design with a central <strong>fact table</strong> (measurable events) connected to <strong>dimension tables</strong> (descriptive attributes). Optimised for fast analytical queries.</p>`},
+{c:"sql",d:"easy",q:'How do you find the second highest salary?',a:`<p>Exclude the max with a subquery:</p><pre><span class="k">SELECT</span> <span class="f">MAX</span>(salary) <span class="k">FROM</span> employees
+<span class="k">WHERE</span> salary &lt; (<span class="k">SELECT</span> <span class="f">MAX</span>(salary) <span class="k">FROM</span> employees);</pre>`},
+{c:"sql",d:"easy",q:'What does PARTITION BY do?',a:`<p>Divides rows into groups within which the window function is applied independently. Like GROUP BY but without collapsing rows. Example: rank employees within each department separately.</p>`},
+{c:"sql",d:"easy",q:'What are LAG() and LEAD()?',a:`<p><code>LAG(col,n)</code>: value n rows before. <code>LEAD(col,n)</code>: value n rows ahead. Used for period-over-period comparisons like month vs previous month.</p>`},
+{c:"sql",d:"easy",q:'How do you handle NULL values?',a:`<p>Use <code>IS NULL</code>/<code>IS NOT NULL</code> to test. Use <code>COALESCE</code> to replace. Never use <code>=</code> to compare NULLs — it always evaluates to NULL, not TRUE.</p>`},
+{c:"sql",d:"easy",q:'What is normalisation?',a:`<p>Organising a database to reduce redundancy and improve integrity by dividing tables and defining relationships. Common forms: 1NF, 2NF, 3NF.</p>`},
+{c:"sql",d:"easy",q:'Difference between CHAR and VARCHAR?',a:`<p><strong>CHAR(n)</strong>: fixed-length, padded with spaces. <strong>VARCHAR(n)</strong>: variable-length up to n characters. VARCHAR is more storage-efficient for varying text.</p>`},
+{c:"sql",d:"easy",q:'What is an index?',a:`<p>A data structure that speeds up data retrieval on a column, like a book's index. Makes SELECT faster but slows writes slightly. Create on columns used in WHERE, JOIN, or ORDER BY.</p>`},
+{c:"sql",d:"easy",q:'What is a CROSS JOIN?',a:`<p>Returns the Cartesian product — every row in table A paired with every row in table B. 10 rows × 5 rows = 50 result rows. Rarely used intentionally.</p>`},
+{c:"sql",d:"easy",q:'Difference between IN and EXISTS?',a:`<p>IN checks value membership in a list or subquery. EXISTS checks whether a subquery returns any rows (stops at first match). EXISTS is generally faster for large subqueries.</p>`},
+{c:"sql",d:"easy",q:'What are DDL, DML, and DCL?',a:`<p><strong>DDL</strong>: CREATE, ALTER, DROP — defines structure. <strong>DML</strong>: SELECT, INSERT, UPDATE, DELETE — manipulates data. <strong>DCL</strong>: GRANT, REVOKE — manages permissions.</p>`},
+{c:"sql",d:"easy",q:'What is a self join?',a:`<p>Joins a table to itself. Useful for hierarchical data — finding employees and their managers when both are stored in the same employees table.</p>`},
+{c:"sql",d:"easy",q:'What is a subquery?',a:`<p>A query nested inside another query. Can appear in SELECT, FROM, or WHERE. Used to filter on aggregated values or reference derived tables.</p>`},
+{c:"sql",d:"easy",q:'What is a stored procedure?',a:`<p>A pre-compiled set of SQL statements stored in the database, callable by name. Accepts parameters, improves performance through caching, and encapsulates reusable business logic.</p>`},
+{c:"sql",d:"easy",q:'What is a trigger?',a:`<p>Automatically executes an action when a defined event (INSERT/UPDATE/DELETE) occurs on a table. Used for audit logging or enforcing business rules automatically.</p>`},
+{c:"sql",d:"easy",q:'What is NTILE()?',a:`<p>Divides rows into n equal buckets and assigns a bucket number. <code>NTILE(4) OVER (ORDER BY revenue)</code> assigns quartiles Q1–Q4.</p>`},
+{c:"sql",d:"easy",q:'How do you pivot data in SQL?',a:`<p>Use PIVOT (SQL Server/Oracle) or conditional aggregation with CASE WHEN inside GROUP BY. Example: turn month rows into month columns using MAX(CASE WHEN month='Jan' THEN revenue END).</p>`},
+{c:"sql",d:"easy",q:'What are ACID properties?',a:`<p><strong>Atomicity</strong>: all or nothing. <strong>Consistency</strong>: valid state transitions. <strong>Isolation</strong>: concurrent transactions don't interfere. <strong>Durability</strong>: committed changes persist after crashes.</p>`},
+{c:"sql",d:"easy",q:'What is a materialised view?',a:`<p>Stores query results physically on disk, unlike a regular view which reruns the query. Improves performance for expensive queries but requires periodic refresh to stay current.</p>`},
+{c:"sql",d:"easy",q:'What does EXPLAIN do?',a:`<p>Shows the query execution plan — how the database retrieves data. The first tool to use when diagnosing slow queries. Look for unwanted full table scans.</p>`},
+{c:"sql",d:"easy",q:'How do you calculate percentage of total?',a:`<p>Use SUM OVER() as the denominator:</p><pre><span class="k">SELECT</span> dept, rev,
+  rev * 100.0 / <span class="f">SUM</span>(rev) <span class="k">OVER</span>() <span class="k">AS</span> pct
+<span class="k">FROM</span> sales;</pre>`},
+{c:"sql",d:"easy",q:'What is a composite key?',a:`<p>A primary key made of two or more columns that together uniquely identify a row. Common in junction tables for many-to-many relationships.</p>`},
+{c:"sql",d:"easy",q:'What is a surrogate key?',a:`<p>A system-generated identifier (auto-increment integer or UUID) with no business meaning. Used as primary key instead of natural keys for stability.</p>`},
+{c:"sql",d:"easy",q:'How do you concatenate strings in SQL?',a:`<p>Use <code>CONCAT(first_name, ' ', last_name)</code> (most databases) or <code>||</code> (PostgreSQL) or <code>+</code> (SQL Server).</p>`},
+{c:"sql",d:"easy",q:'What is TRIM()?',a:`<p>Removes leading and trailing whitespace from a string. <code>LTRIM()</code> for leading, <code>RTRIM()</code> for trailing. Essential for cleaning data loaded from CSV files.</p>`},
+{c:"sql",d:"easy",q:'How do you extract year/month from a date?',a:`<p><code>YEAR(date)</code> / <code>MONTH(date)</code> (MySQL/SQL Server) or <code>EXTRACT(YEAR FROM date)</code> (PostgreSQL/standard SQL).</p>`},
+{c:"sql",d:"easy",q:'What is DATEDIFF?',a:`<p>Calculates the difference between two dates in a specified unit. <code>DATEDIFF(DAY, start_date, end_date)</code> returns the number of days between two dates.</p>`},
+{c:"sql",d:"easy",q:'What is a recursive CTE?',a:`<p>References itself to process hierarchical data (org charts, category trees). Has an anchor member (base case) and a recursive member that builds on it iteratively.</p>`},
+{c:"sql",d:"easy",q:'How do you find customers who never placed an order?',a:`<p>Use a LEFT JOIN and filter for NULL on the orders side:</p><pre><span class="k">SELECT</span> c.* <span class="k">FROM</span> customers c
+<span class="k">LEFT JOIN</span> orders o <span class="k">ON</span> c.id = o.cid
+<span class="k">WHERE</span> o.id <span class="k">IS NULL</span>;</pre>`},
+{c:"sql",d:"easy",q:'What is STRING_AGG / GROUP_CONCAT?',a:`<p>Aggregates multiple string values into one delimited string per group. <code>STRING_AGG</code> (SQL Server/PostgreSQL) or <code>GROUP_CONCAT</code> (MySQL). Creates comma-separated lists per group.</p>`},
+{c:"sql",d:"easy",q:'What is a temporary table?',a:`<p>Exists only for the session or transaction. Created with <code>CREATE TEMP TABLE</code> or <code>#tablename</code> (SQL Server). Useful for storing intermediate results in complex multi-step queries.</p>`},
+{c:"sql",d:"easy",q:'What is a CHECK constraint?',a:`<p>Enforces a condition on column values: <code>CHECK (age >= 0)</code>. The database rejects any INSERT or UPDATE that violates the constraint, ensuring data integrity at the database level.</p>`},
+{c:"sql",d:"easy",q:'What is a UNIQUE constraint?',a:`<p>Ensures all values in a column are distinct. Unlike a primary key, a UNIQUE column can contain NULLs (in most databases). A table can have multiple UNIQUE constraints.</p>`},
+{c:"sql",d:"easy",q:'Difference between clustered and non-clustered index?',a:`<p>Clustered: determines the physical order of rows on disk; one per table. Non-clustered: a separate lookup structure; many per table.</p>`},
+{c:"sql",d:"easy",q:'What is a lateral join?',a:`<p>LATERAL (PostgreSQL) or CROSS APPLY (SQL Server) lets a subquery in FROM reference columns from preceding tables. Useful for row-by-row subqueries and table-valued functions.</p>`},
+{c:"sql",d:"easy",q:'Difference between fact and dimension tables?',a:`<p><strong>Fact table</strong>: quantitative data + foreign keys (sales amounts, quantities). <strong>Dimension table</strong>: descriptive attributes (product name, customer city, date) used to slice and filter facts.</p>`},
+{c:"py",d:"easy",q:'What is pandas and its two main data structures?',a:`<p>Python's primary data manipulation library. <strong>Series</strong>: 1D labelled array. <strong>DataFrame</strong>: 2D table with labelled rows and columns — like a spreadsheet or SQL table in Python.</p>`},
+{c:"py",d:"easy",q:'How do you read a CSV file in pandas?',a:`<p><code>df = pd.read_csv('file.csv')</code>. Key params: <code>sep</code> (delimiter), <code>parse_dates</code> (auto-parse date columns), <code>na_values</code> (custom NA strings). Always call <code>df.head()</code> to verify it loaded correctly.</p>`},
+{c:"py",d:"easy",q:'Difference between loc and iloc?',a:`<p><code>loc</code>: selects by label. <code>iloc</code>: selects by integer position (0-based). Example: <code>df.loc[0, 'name']</code> vs <code>df.iloc[0, 2]</code>.</p>`},
+{c:"py",d:"easy",q:'How do you filter rows in a DataFrame?',a:`<p>Boolean indexing. Wrap conditions in parentheses when combining with <code>&amp;</code> or <code>|</code>.</p><pre>df[df['age'] &gt; 30]
+df[(df['age'] &gt; 30) &amp; (df['city'] == 'London')]</pre>`},
+{c:"py",d:"easy",q:'How do you handle missing values?',a:`<p>Detect: <code>df.isnull().sum()</code>. Drop: <code>df.dropna()</code>. Fill: <code>df.fillna(value)</code> or <code>df.fillna(df.mean())</code> for mean imputation. Choose based on the cause and volume of missingness.</p>`},
+{c:"py",d:"easy",q:'What does df.describe() show?',a:`<p>Summary statistics for numeric columns: count, mean, std, min, quartiles, max. Add <code>include='all'</code> for categorical columns too. Always run this first when exploring a new dataset.</p>`},
+{c:"py",d:"easy",q:'How do you merge two DataFrames?',a:`<p><code>pd.merge(df1, df2, on='key', how='left')</code>. Supports inner/left/right/outer. Use <code>left_on</code>/<code>right_on</code> when key names differ between DataFrames.</p>`},
+{c:"py",d:"easy",q:'What is groupby() in pandas?',a:`<p>Groups rows by a column and applies aggregate functions per group — like SQL GROUP BY.</p><pre>df.groupby('region').agg({'sales': 'sum', 'orders': 'count'})</pre><p>Use <code>reset_index()</code> to flatten the result.</p>`},
+{c:"py",d:"easy",q:'What is apply() in pandas?',a:`<p>Runs a function along an axis. <code>df['col'].apply(func)</code>: element-wise on Series. <code>df.apply(func, axis=1)</code>: row-wise. Use when vectorised operations are not sufficient.</p>`},
+{c:"py",d:"easy",q:'What is a lambda function?',a:`<p>An anonymous, single-expression function: <code>lambda x: x * 2</code>. Used with <code>apply()</code> for concise inline transformations.</p><pre>df['grade'] = df['score'].apply(lambda x: 'Pass' if x &gt;= 50 else 'Fail')</pre>`},
+{c:"py",d:"easy",q:'How do you convert a column data type?',a:`<p><code>df['col'].astype(int)</code>. For dates: <code>pd.to_datetime(df['date_col'])</code>. For numeric with errors: <code>pd.to_numeric(df['col'], errors='coerce')</code> replaces invalid values with NaN.</p>`},
+{c:"py",d:"easy",q:'What is the difference between wide and long format?',a:`<p><strong>Wide</strong>: one row per subject, many value columns. <strong>Long</strong>: one row per observation. Use <code>pd.melt()</code> for wide→long and <code>df.pivot()</code> for long→wide. Most analytics tools prefer long format.</p>`},
+{c:"py",d:"easy",q:'How do you export a DataFrame to CSV?',a:`<p><code>df.to_csv('output.csv', index=False)</code>. Always set <code>index=False</code> to avoid writing the row index as a column. Use <code>encoding='utf-8-sig'</code> for Excel compatibility on Windows.</p>`},
+{c:"py",d:"easy",q:'What is value_counts()?',a:`<p><code>df['col'].value_counts()</code> counts each unique value sorted by frequency. Add <code>normalize=True</code> to get proportions. One of the most useful quick-EDA functions.</p>`},
+{c:"py",d:"easy",q:'How do you rename columns?',a:`<p><code>df.rename(columns={'old':'new'}, inplace=True)</code>. To standardise all column names: <code>df.columns = df.columns.str.lower().str.replace(' ', '_')</code>.</p>`},
+{c:"py",d:"easy",q:'How do you drop a column?',a:`<p><code>df.drop(columns=['col1','col2'], inplace=True)</code> or <code>df = df.drop('col1', axis=1)</code>. Always use <code>columns=</code> or <code>axis=1</code> to avoid accidentally dropping rows.</p>`},
+{c:"py",d:"easy",q:'How do you create a new calculated column?',a:`<p><code>df['profit'] = df['revenue'] - df['cost']</code>. For conditional logic: <code>df['band'] = df['score'].apply(lambda x: 'high' if x &gt; 80 else 'low')</code>.</p>`},
+{c:"py",d:"easy",q:'How do you check for and remove duplicates?',a:`<p>Check: <code>df.duplicated().sum()</code>. Remove: <code>df.drop_duplicates(inplace=True)</code>. Subset: <code>df.drop_duplicates(subset=['email'], keep='first')</code>.</p>`},
+{c:"py",d:"easy",q:'What is NumPy and how does it relate to pandas?',a:`<p>NumPy provides high-performance multi-dimensional arrays. Pandas is built on NumPy — DataFrame columns are NumPy arrays. NumPy for numerical computing; pandas for labelled, tabular data.</p>`},
+{c:"py",d:"easy",q:'What is a list comprehension?',a:`<p>Concise list creation: <code>[x**2 for x in range(10) if x%2==0]</code>. Faster and more Pythonic than a for loop with append(). Widely used for data transformation.</p>`},
+{c:"py",d:"easy",q:'Difference between list, tuple, and dictionary?',a:`<p><strong>List</strong>: ordered, mutable <code>[1,2,3]</code>. <strong>Tuple</strong>: ordered, immutable <code>(1,2,3)</code>. <strong>Dict</strong>: key-value pairs, keys unique <code>{'a':1}</code>. Choose based on mutability and access patterns.</p>`},
+{c:"py",d:"easy",q:'What is an f-string?',a:`<p>Embeds expressions in string literals (Python 3.6+): <code>f'Revenue: £{revenue:,.2f}'</code>. Fastest and most readable string formatting method.</p>`},
+{c:"py",d:"easy",q:'What is a virtual environment and why use one?',a:`<p>An isolated Python environment with its own packages. Created with <code>python -m venv env</code>. Prevents version conflicts between projects and ensures reproducibility.</p>`},
+{c:"py",d:"easy",q:'What is pd.cut() used for?',a:`<p>Bins continuous values into discrete intervals: <code>pd.cut(df['age'], bins=[0,18,35,60,100], labels=['child','young','mid','senior'])</code>. Creates age groups, price tiers, or score bands.</p>`},
+{c:"py",d:"easy",q:'What is reset_index() used for?',a:`<p>Resets the DataFrame index to the default integer sequence. Commonly needed after groupby() or filtering that leaves a non-sequential index. Use <code>drop=True</code> to discard the old index.</p>`},
+{c:"py",d:"easy",q:'What is the .str accessor in pandas?',a:`<p>Accesses string methods vectorially on a Series: <code>df['name'].str.lower()</code>. Applies to every element. Different from Python's single-string methods.</p>`},
+{c:"py",d:"easy",q:'How do you handle date arithmetic in pandas?',a:`<p>Convert first: <code>pd.to_datetime(df['date'])</code>. Then use .dt accessor: <code>df['date'].dt.year</code>, <code>df['date'].dt.month</code>. Date differences: <code>(df['end']-df['start']).dt.days</code>.</p>`},
+{c:"py",d:"easy",q:'What is Matplotlib used for?',a:`<p>Python's foundational plotting library for static charts. <code>plt.plot(x,y); plt.title('T'); plt.show()</code>. Seaborn provides prettier statistical plots with less code and is built on Matplotlib.</p>`},
+{c:"py",d:"easy",q:'What is Seaborn?',a:`<p>Statistical visualisation library built on Matplotlib. Simplifies distributions, heatmaps, box plots, regression plots with attractive defaults. Example: <code>sns.heatmap(df.corr(), annot=True)</code>.</p>`},
+{c:"py",d:"easy",q:'How do you create a pivot table in pandas?',a:`<p><code>df.pivot_table(values='revenue', index='region', columns='product', aggfunc='sum', fill_value=0)</code>. Like Excel's pivot table. Add <code>margins=True</code> for row/column totals.</p>`},
+{c:"py",d:"easy",q:'What is glob used for?',a:`<p>Finds files matching a pattern: <code>glob.glob('data/*.csv')</code>. Useful for batch-reading multiple monthly files into one DataFrame using <code>pd.concat()</code>.</p>`},
+{c:"py",d:"easy",q:'What is a regular expression (regex)?',a:`<p>Patterns for matching and extracting text. In analytics: validate emails, extract numbers from strings, clean messy text. Use Python's <code>re</code> module or pandas' <code>.str.extract()</code> and <code>.str.replace()</code>.</p>`},
+{c:"py",d:"easy",q:'What is a defaultdict?',a:`<p>From the collections module. Returns a default value for missing keys instead of raising KeyError. <code>defaultdict(int)</code> initialises missing keys to 0. Useful for frequency counting.</p>`},
+{c:"py",d:"easy",q:'What is enumerate() used for?',a:`<p>Adds a counter to an iterable: <code>for i, val in enumerate(my_list)</code>. Avoids manually tracking a loop index variable.</p>`},
+{c:"py",d:"easy",q:'What is zip() used for?',a:`<p>Combines iterables element-wise into tuples: <code>list(zip([1,2],['a','b']))</code> → <code>[(1,'a'),(2,'b')]</code>. Create dicts from two lists: <code>dict(zip(keys, values))</code>.</p>`},
+{c:"py",d:"easy",q:'How do you sample rows from a DataFrame?',a:`<p><code>df.sample(n=100)</code> or <code>df.sample(frac=0.1)</code> for 10%. Use <code>random_state=42</code> for reproducibility. Test transformations on a sample before running on the full dataset.</p>`},
+{c:"py",d:"easy",q:'What does df.info() show?',a:`<p>Shows column names, non-null counts, data types, and memory usage for each column. The quickest way to spot columns with unexpected NULLs or wrong data types after loading a dataset.</p>`},
+{c:"py",d:"easy",q:'How do you calculate correlation in pandas?',a:`<p><code>df.corr()</code> returns a correlation matrix for all numeric columns. <code>df['a'].corr(df['b'])</code> gives the correlation between two specific columns. Visualise with a seaborn heatmap.</p>`},
+{c:"py",d:"easy",q:'What is the difference between merge and concat?',a:`<p><code>merge</code>: joins DataFrames horizontally on key columns (SQL JOINs). <code>concat</code>: stacks DataFrames vertically (appending rows) or horizontally. Use concat when combining DataFrames with the same schema.</p>`},
+{c:"py",d:"easy",q:'What is Plotly Express?',a:`<p>High-level library for interactive charts with minimal code. <code>px.bar(df, x='region', y='sales', color='product')</code>. Popular for dashboards and presentations where interactivity matters.</p>`},
+{c:"py",d:"easy",q:'What is a generator in Python?',a:`<p>A function that yields values one at a time using <code>yield</code>. Memory-efficient for large datasets because values are produced on demand rather than all at once in memory.</p>`},
+{c:"py",d:"easy",q:'What is os.path used for?',a:`<p>Builds file paths platform-independently. <code>os.path.join(folder, file)</code> works on Windows/Mac/Linux. <code>os.path.exists(path)</code> checks if a file exists before reading it.</p>`},
+{c:"py",d:"easy",q:'How do you combine multiple CSV files into one DataFrame?',a:`<p><code>import glob; dfs = [pd.read_csv(f) for f in glob.glob('data/*.csv')]; combined = pd.concat(dfs, ignore_index=True)</code>. A common pattern for loading monthly export files.</p>`},
+{c:"py",d:"easy",q:'How do you flatten a nested JSON?',a:`<p><code>pd.json_normalize(data)</code> flattens a list of dicts. For deeply nested structures, write a recursive function or use the <code>flatten_json</code> library. Common when consuming REST APIs.</p>`},
+{c:"py",d:"easy",q:'What are key string methods for data cleaning?',a:`<p><code>.strip()</code>: removes whitespace. <code>.lower()</code>/<code>.upper()</code>: normalises case. <code>.replace('old','new')</code>: substitutes text. <code>.split()</code>: splits on a delimiter. Used via the <code>.str</code> accessor on pandas Series.</p>`},
+{c:"py",d:"easy",q:'What is Jupyter Notebook?',a:`<p>An interactive environment combining code, markdown, and visualisations in one document. Standard for exploratory data analysis. Run code cell by cell and see results inline. JupyterLab is the more feature-rich modern successor.</p>`},
+{c:"stat",d:"easy",q:'Difference between mean, median, and mode?',a:`<p><strong>Mean</strong>: arithmetic average. <strong>Median</strong>: middle value when sorted. <strong>Mode</strong>: most frequent value. Median is preferred when data is skewed or has outliers, as it is not affected by extreme values.</p>`},
+{c:"stat",d:"easy",q:'What is standard deviation?',a:`<p>Measures average spread from the mean. Low SD: values cluster close. High SD: values are spread out. It is the square root of variance and is in the same units as the data.</p>`},
+{c:"stat",d:"easy",q:'What is a p-value?',a:`<p>The probability of observing results as extreme as yours if the null hypothesis were true. Below 0.05 is conventionally significant — result unlikely to be due to chance alone. Low p-value → reject H0.</p>`},
+{c:"stat",d:"easy",q:'Correlation vs causation?',a:`<p>Correlation: two variables move together. Causation: one directly causes the other. A confounding variable often explains a correlation. Always question whether a causal mechanism actually exists.</p>`},
+{c:"stat",d:"easy",q:'What is a confidence interval?',a:`<p>A range of plausible values for a population parameter. A 95% CI means: if you repeated the experiment many times, 95% of constructed intervals would contain the true value.</p>`},
+{c:"stat",d:"easy",q:'What is the central limit theorem?',a:`<p>The distribution of sample means approaches normal as sample size grows (typically n ≥ 30), regardless of the population distribution. Underpins hypothesis testing and confidence intervals.</p>`},
+{c:"stat",d:"easy",q:'What is a hypothesis test?',a:`<p>Evaluates whether there is enough evidence to reject the null hypothesis (H0). Define H0 and H1, collect data, compute a test statistic, and compare the p-value to your significance level α.</p>`},
+{c:"stat",d:"easy",q:'Type I vs Type II error?',a:`<p><strong>Type I</strong> (false positive): rejecting H0 when it is actually true. <strong>Type II</strong> (false negative): failing to reject H0 when it is actually false. α controls the Type I error rate.</p>`},
+{c:"stat",d:"easy",q:'What is statistical power?',a:`<p>Probability of correctly rejecting H0 when H1 is true. Typically target 0.8 (80%). Power increases with larger sample size. Low power means you might miss a real effect.</p>`},
+{c:"stat",d:"easy",q:'What is skewness?',a:`<p>Measures asymmetry of a distribution. Positive skew (right tail): most values low with a few high extremes. Negative skew (left tail): the opposite. Skewed data may need log transformation.</p>`},
+{c:"stat",d:"easy",q:'What is a normal distribution?',a:`<p>Symmetric bell-shaped curve. Empirical rule: ~68% of values within 1 SD of mean, ~95% within 2 SDs, ~99.7% within 3 SDs. Many statistical tests assume normality.</p>`},
+{c:"stat",d:"easy",q:'What is a t-test?',a:`<p>Compares means. <strong>One-sample</strong>: vs a known value. <strong>Two-sample</strong>: two independent groups. <strong>Paired</strong>: same subjects under two conditions. Assumes approximate normality.</p>`},
+{c:"stat",d:"easy",q:'What is ANOVA?',a:`<p>Tests whether means differ across three or more groups simultaneously. Avoids the inflated Type I error rate of running multiple t-tests. A significant result tells you at least one group differs, but not which one.</p>`},
+{c:"stat",d:"easy",q:'What is a boxplot?',a:`<p>Shows median (centre line), IQR (box from Q1 to Q3), whiskers (typically 1.5×IQR), and outlier points. Best chart for comparing distributions across groups and spotting outliers.</p>`},
+{c:"stat",d:"easy",q:'What is a histogram?',a:`<p>Divides continuous data into bins and shows frequency per bin. Reveals distribution shape: symmetric, skewed, bimodal, uniform. Use it to understand a variable before analysis.</p>`},
+{c:"stat",d:"easy",q:'What is an outlier and how do you detect it?',a:`<p>A data point far from others. Methods: IQR rule (below Q1−1.5×IQR or above Q3+1.5×IQR), Z-score (|z|>3), or visual box plots. Always investigate before removing — outliers may be real signals.</p>`},
+{c:"stat",d:"easy",q:'What is a z-score?',a:`<p>How many standard deviations a point is from the mean: z = (x − μ) / σ. Used for standardisation, outlier detection, and normal distribution probability calculations.</p>`},
+{c:"stat",d:"easy",q:'What is Pearson correlation?',a:`<p>Measures linear relationship between two continuous variables. Ranges from −1 to +1. Near 0: no linear relationship. Assumes both variables are roughly normally distributed.</p>`},
+{c:"stat",d:"easy",q:'What is Spearman correlation?',a:`<p>Non-parametric rank-based correlation. No normality assumption, robust to outliers, suitable for ordinal data. A better choice than Pearson when data is skewed or contains outliers.</p>`},
+{c:"stat",d:"easy",q:'What is the IQR?',a:`<p>Interquartile Range = Q3 − Q1. Measures the spread of the middle 50% of data. Resistant to outliers. Used in the IQR outlier detection method and to construct box plots.</p>`},
+{c:"stat",d:"easy",q:'What is simple linear regression?',a:`<p>Models the relationship between one predictor X and outcome Y as a line: Y = β0 + β1X + ε. Estimates the slope and intercept that minimise squared residuals.</p>`},
+{c:"stat",d:"easy",q:'What is R-squared?',a:`<p>Measures how much variation in Y the model explains. R²=1: perfect fit. R²=0: model explains nothing. High R² does not guarantee good generalisation to new data.</p>`},
+{c:"stat",d:"easy",q:'What is sampling bias?',a:`<p>When the sample is not representative of the population — certain groups are over- or under-represented. Leads to incorrect conclusions. Examples: online surveys, voluntary response bias.</p>`},
+{c:"stat",d:"easy",q:'What is a moving average?',a:`<p>Smooths time series by averaging values over a rolling window. A 7-day moving average replaces each point with the average of the prior 7 days. Reduces noise and reveals trends.</p>`},
+{c:"stat",d:"easy",q:'What is seasonality?',a:`<p>A regular, repeating pattern at fixed intervals (weekly, monthly, annually). Example: retail sales spike every December. Decomposition isolates seasonality from the underlying trend.</p>`},
+{c:"stat",d:"easy",q:'What is a confidence interval vs a p-value?',a:`<p>A p-value tells you whether an effect is statistically significant. A confidence interval tells you the plausible range of the effect size. CIs are more informative because they communicate both significance and magnitude.</p>`},
+{c:"stat",d:"easy",q:'What is logistic regression?',a:`<p>Predicts the probability of a binary outcome (0/1) by fitting a logistic (S-shaped) curve. Despite the name, it is a classification model. Outputs probabilities between 0 and 1.</p>`},
+{c:"stat",d:"easy",q:'What is cross-validation?',a:`<p>Assesses model performance on unseen data by splitting into k folds, training on some and testing on others, repeatedly. Gives a more reliable performance estimate than a single train/test split.</p>`},
+{c:"stat",d:"easy",q:'What is overfitting?',a:`<p>Model learns noise in training data rather than the underlying pattern. Performs very well on training data but poorly on new data. Detected by comparing training vs validation performance.</p>`},
+{c:"stat",d:"easy",q:'What is MAE vs RMSE?',a:`<p><strong>MAE</strong>: averages absolute errors — easy to interpret. <strong>RMSE</strong>: penalises large errors more heavily. Use RMSE when large errors are costly; MAE for a straightforward average error measure.</p>`},
+{c:"stat",d:"easy",q:'What is the empirical rule?',a:`<p>For a normal distribution: ~68% within 1 SD, ~95% within 2 SDs, ~99.7% within 3 SDs of the mean. Used to quickly assess how unusual a value is relative to the distribution.</p>`},
+{c:"stat",d:"easy",q:'What is a percentile?',a:`<p>The value below which a given percentage of observations fall. The 90th percentile means 90% of values are below it. The 50th percentile is the median. Used for benchmarking and ranking.</p>`},
+{c:"stat",d:"easy",q:'Statistical vs practical significance?',a:`<p>Statistical: effect unlikely due to chance (low p-value). Practical: effect large enough to matter in the real world. Large samples can make tiny, meaningless differences statistically significant.</p>`},
+{c:"stat",d:"easy",q:'What is Bayes\' theorem?',a:`<p>Updates the probability of a hypothesis given new evidence: P(A|B) = P(B|A)×P(A)/P(B). Basis for Bayesian statistics and Naive Bayes classifiers. Applied in spam filtering and fraud detection.</p>`},
+{c:"stat",d:"easy",q:'What is a control group?',a:`<p>The comparison group in an experiment that does not receive the treatment. Establishes the baseline against which the treatment group is compared, isolating the causal effect of the variable being tested.</p>`},
+{c:"stat",d:"easy",q:'What is bootstrapping?',a:`<p>A resampling technique that draws many random samples with replacement from original data to estimate the sampling distribution of a statistic — used to calculate confidence intervals without assuming a specific distribution.</p>`},
+{c:"xl",d:"easy",q:'What is a pivot table?',a:`<p>Summarises and aggregates large datasets by dragging fields into rows, columns, values, and filters — no formulas needed. Use it to quickly answer questions like total sales by region and product without writing SQL.</p>`},
+{c:"xl",d:"easy",q:'What is VLOOKUP and its limitations?',a:`<p><code>=VLOOKUP(A2,$D$2:$F$100,2,FALSE)</code>. Limitations: only looks left-to-right, slow on large data, breaks when columns are inserted. Replaced by INDEX MATCH or XLOOKUP.</p>`},
+{c:"xl",d:"easy",q:'What is INDEX MATCH?',a:`<p>MATCH finds the row position, INDEX retrieves the value. Can look in any direction and doesn't break when columns are inserted: <code>=INDEX(C:C,MATCH(A2,B:B,0))</code>. More robust than VLOOKUP.</p>`},
+{c:"xl",d:"easy",q:'What is XLOOKUP?',a:`<p>The modern replacement for VLOOKUP (Excel 2019+). Searches any direction, cleaner syntax: <code>=XLOOKUP(A2,D:D,E:E,"Not found")</code>. No column index number required.</p>`},
+{c:"xl",d:"easy",q:'What is COUNTIF and COUNTIFS?',a:`<p>COUNTIF: one condition: <code>=COUNTIF(A:A,"London")</code>. COUNTIFS: multiple conditions across different ranges: <code>=COUNTIFS(A:A,"London",B:B,"&gt;1000")</code>.</p>`},
+{c:"xl",d:"easy",q:'What is SUMIF and SUMIFS?',a:`<p>SUMIF: <code>=SUMIF(A:A,"North",B:B)</code>. SUMIFS: <code>=SUMIFS(C:C,A:A,"North",B:B,"Q1")</code>. Aggregate values meeting one or more conditions.</p>`},
+{c:"xl",d:"easy",q:'What is IFERROR?',a:`<p>Catches formula errors and returns a custom value: <code>=IFERROR(VLOOKUP(A2,D:E,2,0),"Not found")</code>. Prevents #N/A and #VALUE! errors from breaking downstream calculations.</p>`},
+{c:"xl",d:"easy",q:'Relative vs absolute cell reference?',a:`<p>Relative (A1): adjusts when copied. Absolute ($A$1): stays fixed. Mixed ($A1 or A$1): locks one dimension. Use $ when referencing a fixed lookup table or a single constant value.</p>`},
+{c:"xl",d:"easy",q:'What is conditional formatting?',a:`<p>Automatically applies colours, data bars, or icons based on cell values. Highlights outliers, shows heat maps, flags above/below threshold — making patterns immediately visible without formulas.</p>`},
+{c:"xl",d:"easy",q:'What is Power Query?',a:`<p>Excel's data import and transformation tool (Get & Transform). Connects to databases, APIs, CSV files. Stores transformation steps for one-click refresh. Best tool for repeatable data preparation in Excel.</p>`},
+{c:"xl",d:"easy",q:'What is a named range?',a:`<p>Assigns a descriptive name to a cell or range (e.g. 'TaxRate' for $B$1). Makes formulas readable: <code>=A2*TaxRate</code>. Managed via Formulas > Name Manager.</p>`},
+{c:"xl",d:"easy",q:'What are LEFT, RIGHT, and MID functions?',a:`<p>LEFT(text,n): first n characters. RIGHT(text,n): last n. MID(text,start,n): n chars from a position. Used to parse fixed-format codes like product IDs or postcode prefixes.</p>`},
+{c:"xl",d:"easy",q:'What is TEXTJOIN?',a:`<p><code>=TEXTJOIN(", ",TRUE,A2:A10)</code> joins a range of values with a delimiter, ignoring blank cells. More powerful than CONCAT for combining a variable number of values.</p>`},
+{c:"xl",d:"easy",q:'What is a slicer?',a:`<p>A visual filter button panel for pivot tables and charts. Clicking a slicer button instantly filters the data. Enables non-technical users to explore data interactively on a dashboard.</p>`},
+{c:"xl",d:"easy",q:'What is Flash Fill?',a:`<p>Ctrl+E auto-fills values by recognising patterns from your first example. Type the first formatted output (e.g. extract first name from full name), press Ctrl+E. Available since Excel 2013.</p>`},
+{c:"xl",d:"easy",q:'What is the IF function?',a:`<p><code>=IF(condition, true_value, false_value)</code>. Combine with AND/OR: <code>=IF(AND(B2&gt;1000,C2="UK"),"Target","Other")</code>. Nest IFs for multiple conditions (or use IFS function in Excel 365).</p>`},
+{c:"xl",d:"easy",q:'What is data validation?',a:`<p>Restricts what users can enter in a cell — dropdowns, date ranges, number limits, or custom formulas. Data > Data Validation. Prevents entry errors at the source, keeping data clean.</p>`},
+{c:"xl",d:"easy",q:'How do you calculate CAGR in Excel?',a:`<p><code>=(End/Start)^(1/years)-1</code>. Format as percentage. More meaningful than average growth rate because it accounts for compounding over multiple years.</p>`},
+{c:"xl",d:"easy",q:'What is NETWORKDAYS?',a:`<p><code>=NETWORKDAYS(start, end, holidays)</code> calculates working days excluding weekends and optionally holidays. Used for SLA calculations, project timelines, and business day deadlines.</p>`},
+{c:"xl",d:"easy",q:'What is SUMPRODUCT?',a:`<p>Multiplies arrays element-wise and sums the results: <code>=SUMPRODUCT(B2:B10,C2:C10)</code>. Also used as a flexible multi-condition SUMIFS: <code>=SUMPRODUCT((A2:A10="North")*(B2:B10&gt;100)*C2:C10)</code>.</p>`},
+{c:"xl",d:"easy",q:'What is goal seek?',a:`<p>Data > What-If Analysis > Goal Seek. Works backwards from a desired result. Example: "What price do I need to achieve £100k profit?" — iterates the input cell until the target formula hits your value.</p>`},
+{c:"xl",d:"easy",q:'What is a sparkline?',a:`<p>A tiny chart in a single cell showing a trend — line, bar, or win/loss. Insert > Sparklines. Summarises trend direction compactly within a table. Popularised by Edward Tufte.</p>`},
+{c:"xl",d:"easy",q:'What does Ctrl+T do?',a:`<p>Converts a range to an Excel Table. Tables auto-expand with new rows, allow column-name references in formulas like <code>=[@Revenue]*1.2</code>, and have built-in filtering and formatting.</p>`},
+{c:"xl",d:"easy",q:'What are UNIQUE(), SORT(), and FILTER() in Excel 365?',a:`<p><strong>UNIQUE()</strong>: returns unique values as a spilled array. <strong>SORT()</strong>: returns a sorted spilled array. <strong>FILTER()</strong>: returns rows matching a condition. All update dynamically when source data changes.</p>`},
+{c:"xl",d:"easy",q:'What is AVERAGEIF?',a:`<p><code>=AVERAGEIF(A:A,"North",B:B)</code> averages values in column B where column A equals "North". AVERAGEIFS extends this to multiple conditions. Useful for calculating segment averages.</p>`},
+{c:"ml",d:"easy",q:'What is machine learning?',a:`<p>Algorithms that learn patterns from data to make predictions or decisions without being explicitly programmed with rules. Key applications: classification, regression, clustering, and anomaly detection.</p>`},
+{c:"ml",d:"easy",q:'Supervised vs unsupervised learning?',a:`<p><strong>Supervised</strong>: trains on labelled data — input maps to a known output (classification, regression). <strong>Unsupervised</strong>: finds patterns in unlabelled data (clustering, PCA).</p>`},
+{c:"ml",d:"easy",q:'Classification vs regression?',a:`<p>Classification predicts a discrete category (spam/not spam, churn/no churn). Regression predicts a continuous numeric value (house price, sales forecast). The target variable type determines which to use.</p>`},
+{c:"ml",d:"easy",q:'What is overfitting and how do you prevent it?',a:`<p>Model memorises training data instead of learning generalisable patterns — excellent on training data, poor on new data. Prevention: more data, regularisation, simpler models, cross-validation.</p>`},
+{c:"ml",d:"easy",q:'What is the bias-variance tradeoff?',a:`<p><strong>Bias</strong>: error from oversimplified model (underfitting). <strong>Variance</strong>: error from sensitivity to training noise (overfitting). The goal is to find the sweet spot that minimises total error.</p>`},
+{c:"ml",d:"easy",q:'What is a decision tree?',a:`<p>Splits data at each node based on the feature that best separates classes. Easy to interpret but prone to overfitting on its own. Random forests and gradient boosting are ensemble improvements.</p>`},
+{c:"ml",d:"easy",q:'What is a random forest?',a:`<p>An ensemble of many decision trees, each trained on a random data and feature subset. Averages predictions (regression) or majority votes (classification). More accurate and robust than a single tree.</p>`},
+{c:"ml",d:"easy",q:'What is a confusion matrix?',a:`<p>A 2×2 table for binary classification showing: True Positives, True Negatives, False Positives, False Negatives. The foundation for computing accuracy, precision, recall, and F1 score.</p>`},
+{c:"ml",d:"easy",q:'What is precision and recall?',a:`<p><strong>Precision</strong> = TP/(TP+FP): of all predicted positives, how many were correct. <strong>Recall</strong> = TP/(TP+FN): of all actual positives, how many were found. Precision minimises false alarms; recall minimises misses.</p>`},
+{c:"ml",d:"easy",q:'What is the F1 score?',a:`<p>F1 = 2×(Precision×Recall)/(Precision+Recall) — the harmonic mean. A balanced metric useful when classes are imbalanced or both false positives and false negatives are costly.</p>`},
+{c:"ml",d:"easy",q:'What is k-means clustering?',a:`<p>Partitions data into k clusters by iteratively assigning each point to its nearest centroid and updating centroids. Requires specifying k in advance. Use the elbow method to choose an appropriate k.</p>`},
+{c:"ml",d:"easy",q:'What is PCA?',a:`<p>Principal Component Analysis reduces dimensionality by transforming correlated features into uncorrelated components that capture the most variance. Used for visualising high-dimensional data and removing noise.</p>`},
+{c:"ml",d:"easy",q:'What is regularisation?',a:`<p>Adds a penalty to the loss function to discourage overly complex models. <strong>L1 (Lasso)</strong>: can zero out features. <strong>L2 (Ridge)</strong>: shrinks all features smoothly. Reduces overfitting.</p>`},
+{c:"ml",d:"easy",q:'What is feature engineering?',a:`<p>Creating, transforming, or selecting input variables to improve model performance. Examples: creating ratios, binning continuous variables, one-hot encoding categories, extracting date parts (day of week).</p>`},
+{c:"ml",d:"easy",q:'What is one-hot encoding?',a:`<p>Converts a categorical variable into multiple binary columns, one per category. Example: colour=[red,blue,green] becomes three 0/1 columns. Required by most ML algorithms that expect numeric input.</p>`},
+{c:"ml",d:"easy",q:'What is feature scaling and why does it matter?',a:`<p>Normalises feature ranges so no single feature dominates. Min-Max scaling: maps to [0,1]. Standardisation: mean=0, SD=1. Required by distance-based algorithms (KNN, SVM) and gradient descent models.</p>`},
+{c:"ml",d:"easy",q:'What is gradient boosting?',a:`<p>Builds trees sequentially where each tree corrects errors of the previous one. XGBoost, LightGBM, CatBoost are popular implementations. Usually the top-performing algorithm for structured tabular data.</p>`},
+{c:"ml",d:"easy",q:'What is a baseline model?',a:`<p>The simplest possible model used as a benchmark — e.g. predicting the most common class or the mean value. Any ML model should significantly outperform the baseline to justify its added complexity.</p>`},
+{c:"ml",d:"easy",q:'What is data leakage?',a:`<p>When information from outside the training data improperly influences the model — e.g. including future information or target-derived features. Leads to inflated training performance but failure in production.</p>`},
+{c:"ml",d:"easy",q:'What is scikit-learn?',a:`<p>Python's standard ML library. Provides a consistent API across all algorithms: fit/transform/predict. Includes preprocessing, model selection, evaluation metrics, and dozens of algorithms. The first ML library to learn.</p>`},
+{c:"dc",d:"easy",q:'What is data cleaning and why is it important?',a:`<p>Identifying and correcting errors, inconsistencies, and missing values in a dataset. Crucial because poor data quality leads to unreliable analysis. The universal rule: <em>garbage in, garbage out</em>.</p>`},
+{c:"dc",d:"easy",q:'What are the most common data quality issues?',a:`<p>Missing values, duplicate records, inconsistent formatting (mixed case, different date formats), wrong data types, outliers, typos in categorical fields, leading/trailing whitespace, and referential integrity violations.</p>`},
+{c:"dc",d:"easy",q:'Strategies for imputing missing values?',a:`<p>Mean/median imputation (simple, distorts distributions), mode for categoricals, forward/backward fill for time series, model-based imputation (predict from other features), and multiple imputation for uncertainty quantification.</p>`},
+{c:"dc",d:"easy",q:'How do you detect outliers programmatically?',a:`<p>IQR method: flag values outside Q1−1.5×IQR to Q3+1.5×IQR. Z-score: flag |z|>3. Always investigate before removing — outliers may be legitimate extreme values or important signals.</p>`},
+{c:"dc",d:"easy",q:'How do you standardise inconsistent categorical values?',a:`<p>Strip whitespace, lowercase, then map variations to canonical forms: <code>df['country'].str.strip().str.lower().replace({'uk':'united kingdom'})</code>. Use fuzzy matching (rapidfuzz) for typos like 'Londin' → 'London'.</p>`},
+{c:"dc",d:"easy",q:'What is data type conversion and why is it needed?',a:`<p>Data loaded from CSV often has incorrect types — numbers as strings, dates as objects. Converting prevents silent errors: string '5' + '3' = '53', not 8. Use <code>astype()</code>, <code>pd.to_numeric()</code>, <code>pd.to_datetime()</code>.</p>`},
+{c:"dc",d:"easy",q:'What are tidy data principles?',a:`<p>Hadley Wickham's principles: (1) each variable is a column, (2) each observation is a row, (3) each observational unit is a table. Tidy data is the standard input format for most analytics and visualisation tools.</p>`},
+{c:"dc",d:"easy",q:'How do you handle a date column with mixed formats?',a:`<p><code>pd.to_datetime(col, infer_datetime_format=True, errors='coerce')</code> handles multiple formats automatically. NaT is inserted where parsing fails, letting you inspect and fix problem rows separately.</p>`},
+{c:"dc",d:"easy",q:'What is fuzzy matching?',a:`<p>Finds strings that are similar but not identical, handling typos and abbreviations. Uses Levenshtein distance. The Python library <code>rapidfuzz</code> calculates match scores between strings.</p>`},
+{c:"dc",d:"easy",q:'What is deduplication?',a:`<p>Removing redundant records. Exact duplicates: <code>df.drop_duplicates()</code>. Fuzzy duplicates (same entity, different text): fuzzy matching on key fields. Always review borderline matches before deleting.</p>`},
+{c:"dc",d:"easy",q:'What is referential integrity?',a:`<p>Every foreign key value in a child table must exist in the parent table's primary key. Check with a LEFT JOIN — rows where parent.id IS NULL are orphaned records causing broken join results.</p>`},
+{c:"dc",d:"easy",q:'How do you handle large CSV files that don\'t fit in memory?',a:`<p>Read in chunks: <code>pd.read_csv(file, chunksize=100000)</code>. Process and aggregate each chunk. Alternatively use Dask or Polars for out-of-memory processing, or query with DuckDB using SQL directly.</p>`},
+{c:"dc",d:"easy",q:'What is data profiling?',a:`<p>Systematically examining a dataset to understand its structure and quality: row counts, completeness, cardinality, value distributions, min/max/mean. Tools: ydata-profiling, Tableau Catalog.</p>`},
+{c:"dc",d:"easy",q:'What is an assertion in data cleaning?',a:`<p>Validates assumptions about data: <code>assert df['age'].min() >= 0</code>. Acts as an inline unit test. If an assertion fails, the pipeline stops immediately rather than silently producing wrong results.</p>`},
+{c:"dc",d:"easy",q:'What is the difference between NULL and blank string?',a:`<p>NULL means the value is absent/unknown. A blank string ('') is present but empty. They behave differently in SQL (<code>IS NULL</code> vs <code>= ''</code>) and pandas (NaN vs ''). Normalise one convention throughout your pipeline.</p>`},
+{c:"dc",d:"easy",q:'What is string normalisation?',a:`<p>Making strings consistent: stripping whitespace (<code>.strip()</code>), lowercasing (<code>.lower()</code>), removing special characters. Prevents 'London' and ' london' being treated as different categories in GROUP BY.</p>`},
+{c:"dc",d:"easy",q:'What is forward fill (ffill)?',a:`<p><code>df.ffill()</code> propagates the last valid observation forward to fill NaN. Appropriate for time series where values remain constant until explicitly changed (e.g. last known price or status).</p>`},
+{c:"dc",d:"easy",q:'What is idempotency in a data pipeline?',a:`<p>An idempotent pipeline produces the same result when run multiple times, even on already-processed data. Important for safe retries on failure. Achieved using UPSERT operations rather than blind inserts.</p>`},
+{c:"dc",d:"easy",q:'What is a sentinel value and why is it dangerous?',a:`<p>A special value used to indicate missing data: −999, 0, or 'N/A' for missing age. Dangerous when treated as real data — averaging ages where −999 means 'unknown' severely skews results.</p>`},
+{c:"dc",d:"easy",q:'What is the difference between data cleaning and data transformation?',a:`<p>Data cleaning fixes quality issues (removing errors, handling NULLs, standardising formats). Data transformation reshapes or derives new variables for analysis (aggregations, normalisation, feature engineering). Both occur in a preprocessing pipeline.</p>`},
+{c:"cl",d:"easy",q:'What is cloud computing and why use it for analytics?',a:`<p>Delivers computing (storage, processing, databases) over the internet on pay-as-you-go pricing. For analytics: no hardware procurement, instant scale for large datasets, and managed services that reduce maintenance overhead.</p>`},
+{c:"cl",d:"easy",q:'What are the three main cloud providers?',a:`<p><strong>AWS</strong> (Amazon): largest, broadest portfolio. <strong>Azure</strong> (Microsoft): preferred in enterprise/Microsoft environments. <strong>GCP</strong> (Google): strong in data engineering and ML (BigQuery, Vertex AI).</p>`},
+{c:"cl",d:"easy",q:'Difference between data lake and data warehouse?',a:`<p>Data lake: stores raw data in any format (flexible, cheap). Data warehouse: stores processed, structured data optimised for SQL analytics (fast queries, consistent schemas). Modern architectures often use both.</p>`},
+{c:"cl",d:"easy",q:'What is ETL vs ELT?',a:`<p><strong>ETL</strong>: Extract, Transform, Load — transform before loading. Traditional. <strong>ELT</strong>: Extract, Load, Transform — load raw data first, then transform inside the warehouse. ELT is the modern cloud default.</p>`},
+{c:"cl",d:"easy",q:'What is BigQuery?',a:`<p>Google Cloud's serverless data warehouse. Query data with standard SQL without managing servers. Charges based on data scanned. Integrated with GA4, Looker, and Vertex AI for end-to-end analytics.</p>`},
+{c:"cl",d:"easy",q:'What is Snowflake?',a:`<p>A cloud-native data warehouse that separates storage from compute for independent scaling. Near-zero maintenance, multi-cloud support, standard SQL interface. Popular in modern data stacks.</p>`},
+{c:"cl",d:"easy",q:'What is Amazon S3?',a:`<p>AWS's object storage service. Stores files of any format at massive scale. In data engineering, S3 serves as the data lake layer — raw files (CSV, Parquet, JSON) land here before processing.</p>`},
+{c:"cl",d:"easy",q:'What is Parquet file format?',a:`<p>A columnar storage format for data lakes. Compresses better than CSV, enables predicate pushdown (reading only needed columns), and is natively supported by Spark, BigQuery, Snowflake, and pandas.</p>`},
+{c:"cl",d:"easy",q:'What is dbt?',a:`<p>An open-source transformation framework. Write SQL transformations as version-controlled models with dependencies, tests, and documentation. Runs inside the data warehouse. The standard for the T in ELT.</p>`},
+{c:"cl",d:"easy",q:'What is Apache Airflow?',a:`<p>An open-source workflow orchestration tool. Pipelines are defined as DAGs (Directed Acyclic Graphs) in Python. Schedules, monitors, and retries pipeline tasks. The most widely used open-source pipeline scheduler.</p>`},
+{c:"cl",d:"easy",q:'Difference between OLTP and OLAP?',a:`<p>OLTP: many small, fast read/write transactions (e-commerce, banking). OLAP: complex analytical queries across large historical datasets (data warehouses). Different architectures optimised for different workloads.</p>`},
+{c:"cl",d:"easy",q:'What is data governance?',a:`<p>Policies, processes, and standards ensuring data is accurate, consistent, secure, and used appropriately. Covers data catalogues, lineage tracking, access controls, privacy compliance (GDPR), and quality standards.</p>`},
+{c:"cl",d:"easy",q:'What is GDPR and how does it affect analytics?',a:`<p>EU data privacy law requiring lawful basis for processing personal data, right to erasure, data minimisation. For analysts: anonymise personal data, don't re-identify individuals by joining datasets.</p>`},
+{c:"cl",d:"easy",q:'What is a streaming vs batch pipeline?',a:`<p>Batch: processes data on a schedule (hourly/daily) — simpler to build. Streaming: processes data continuously as it arrives (Kafka, Kinesis). Use streaming for real-time dashboards, fraud detection, live recommendations.</p>`},
+{c:"cl",d:"easy",q:'What is a data catalogue?',a:`<p>A metadata repository documenting available datasets: schema, descriptions, ownership, lineage, quality metrics. Tools: Alation, DataHub, Google Data Catalog. Makes data discoverable and reduces time spent searching.</p>`},
+{c:"viz",d:"easy",q:'When to use bar chart vs line chart?',a:`<p>Bar chart: comparing discrete categories. Line chart: showing change over continuous time. The key question: is the x-axis categorical (bar) or temporal/continuous (line)?</p>`},
+{c:"viz",d:"easy",q:'What are the principles of good data visualisation?',a:`<p>Clarity, accuracy, simplicity (remove chart junk), appropriate chart type, context (titles, labels, units, source). Tufte's data-ink ratio: maximise the proportion of ink encoding actual data.</p>`},
+{c:"viz",d:"easy",q:'What is a heat map?',a:`<p>Uses colour intensity to show magnitude across a 2D grid. Useful for correlation matrices, website click maps, sales by day/hour. Use sequential colour palettes for one-direction data.</p>`},
+{c:"viz",d:"easy",q:'How do you visualise a numerical distribution?',a:`<p>Histogram (frequency distribution), box plot (median, quartiles, outliers), or KDE/density plot. Box plots are best for comparing distributions across multiple groups simultaneously.</p>`},
+{c:"viz",d:"easy",q:'What is a scatter plot and when do you use it?',a:`<p>Plots two numeric variables to explore correlation. Each point is one observation. Add a trendline for regression, colour for a third dimension, and size for a fourth (bubble chart).</p>`},
+{c:"viz",d:"easy",q:'When should you avoid a pie chart?',a:`<p>Avoid when there are more than 5–6 categories, proportions are similar, or precise values matter. Bar charts almost always communicate proportions more accurately because they share a common baseline.</p>`},
+{c:"viz",d:"easy",q:'What is Tableau?',a:`<p>A leading BI tool for creating interactive dashboards from databases, spreadsheets, and cloud sources. Known for drag-and-drop ease, fast renders, and strong community support. Used to share insights without SQL.</p>`},
+{c:"viz",d:"easy",q:'What is Power BI?',a:`<p>Microsoft's BI tool, deeply integrated with Excel, Azure, and Office 365. Generally more affordable than Tableau. Dominates in Microsoft-heavy organisations. Uses DAX for advanced calculations.</p>`},
+{c:"viz",d:"easy",q:'What is chart junk?',a:`<p>Visual decoration that adds no information: 3D effects, unnecessary gridlines, decorative images, excessive colour. Distracts from the data and should be eliminated. Clean charts communicate faster.</p>`},
+{c:"viz",d:"easy",q:'Difference between dashboard and report?',a:`<p>Dashboard: real-time, high-level KPI overview — interactive, auto-updated, for monitoring. Report: static document for in-depth analysis — produced at a point in time for distribution and archiving.</p>`},
+{c:"viz",d:"easy",q:'What is a waterfall chart?',a:`<p>Shows how a starting value changes through positive and negative contributions to reach a final value. Common in P&L bridge analysis and variance analysis. Available natively in Excel 2016+.</p>`},
+{c:"viz",d:"easy",q:'What is a stacked bar chart and when to avoid it?',a:`<p>Shows composition within each bar. Avoid when precise comparison of individual segments is needed — only the bottom segment shares a common baseline, making middle segments hard to compare.</p>`},
+{c:"viz",d:"easy",q:'What is data storytelling?',a:`<p>Combining data, narrative, and visuals to drive decisions. Structure: context → complication → resolution. Effective analysts guide the audience to the insight and its implication — not just show charts.</p>`},
+{c:"viz",d:"easy",q:'What are pre-attentive attributes?',a:`<p>Visual features the brain processes before conscious attention: colour, size, shape, orientation. Use them to highlight key data (e.g. red for below target, larger text for the key metric) — guides viewers instantly.</p>`},
+{c:"viz",d:"easy",q:'What is a small multiples (trellis) chart?',a:`<p>Repeats the same chart type for different subgroups side by side, sharing axes. Enables comparison across groups without the visual clutter of overlaid series. Example: monthly sales line chart per region.</p>`},
+{c:"viz",d:"easy",q:'What is a violin plot?',a:`<p>Combines a box plot with a density plot, showing the full distribution shape. More informative than a box plot alone because it reveals bimodality or unusual shapes invisible in a standard box plot.</p>`},
+{c:"viz",d:"easy",q:'What is the lie factor?',a:`<p>Tufte's lie factor = visual representation size / actual data ratio. A lie factor of 1 is accurate; >1 exaggerates. Common causes: truncated y-axes, distorted icon sizes in infographics.</p>`},
+{c:"viz",d:"easy",q:'What is a KPI card in a dashboard?',a:`<p>Displays one metric prominently — current value, comparison to target or prior period, and trend indicator. Provides instant status on a key goal. Often the first element a stakeholder looks at.</p>`},
+{c:"viz",d:"easy",q:'How do you handle too many categories in a chart?',a:`<p>Group rare categories into 'Other', limit to the top N by value, use a small multiples approach, or add an interactive filter. Showing 30+ categories overwhelms viewers and hides the key insight.</p>`},
+{c:"viz",d:"easy",q:'What is colour accessibility in visualisation?',a:`<p>~8% of men have colour vision deficiency. Red-green pairs are the most common problem. Use colourblind-safe palettes (e.g. Okabe-Ito, ColorBrewer) and encode information with shape or pattern as well as colour.</p>`},
+{c:"biz",d:"easy",q:'What is a KPI?',a:`<p>A Key Performance Indicator measures progress toward a business objective. Good KPIs are measurable, actionable, and tied to a decision. Avoid vanity metrics that look impressive but don't drive action.</p>`},
+{c:"biz",d:"easy",q:'What is customer churn and how do you measure it?',a:`<p>Churn = lost customers / customers at start of period × 100. Rising churn signals problems with product-market fit or support. Cohort analysis reveals whether churn is improving over time.</p>`},
+{c:"biz",d:"easy",q:'What is A/B testing?',a:`<p>Randomly splits users into control and treatment groups to measure the causal effect of a change. Steps: define hypothesis and metric, calculate sample size, randomise, run for sufficient duration, analyse with a significance test.</p>`},
+{c:"biz",d:"easy",q:'What is cohort analysis?',a:`<p>Groups users by a shared characteristic (e.g. signup month) and tracks their behaviour over time. Used to understand retention, LTV, and whether product changes improved engagement for newer cohorts.</p>`},
+{c:"biz",d:"easy",q:'What is customer lifetime value (CLV)?',a:`<p>Total revenue expected from a customer over their relationship with the business. Simple formula: average purchase value × purchase frequency × customer lifespan. High CLV segments justify higher acquisition spend.</p>`},
+{c:"biz",d:"easy",q:'What is the difference between a metric and a dimension?',a:`<p>A metric is a quantitative value you aggregate (revenue, orders, sessions). A dimension is a categorical attribute used to slice data (region, product, date). Metrics answer 'how much?'; dimensions answer 'which group?'.</p>`},
+{c:"biz",d:"easy",q:'What is RFM analysis?',a:`<p>Segments customers by Recency (last purchase), Frequency (how often), and Monetary (how much spent). Assigns scores to create segments like 'champions' (high on all three) and 'at risk' (good history, haven't bought recently).</p>`},
+{c:"biz",d:"easy",q:'Difference between leading and lagging indicators?',a:`<p>Leading: predict future performance (pipeline value, web traffic). Lagging: measure past outcomes (revenue, churn). Good dashboards track both — leads tell you where you're going; lags where you've been.</p>`},
+{c:"biz",d:"easy",q:'What is a funnel analysis?',a:`<p>Tracks users through sequential steps (visit → signup → activate → purchase) and measures drop-off at each stage. Identifies where users leave and where optimisation will have the most impact on conversion.</p>`},
+{c:"biz",d:"easy",q:'What is MRR?',a:`<p>Monthly Recurring Revenue — the predictable monthly revenue from subscriptions. ARR = MRR × 12. Core SaaS metrics tracked alongside churn rate, expansion MRR, and net revenue retention.</p>`},
+{c:"biz",d:"easy",q:'What is attribution modelling?',a:`<p>Assigns credit for a conversion across marketing touchpoints. Models: last-click, first-click, linear, time-decay, data-driven. Each tells a different story about marketing effectiveness.</p>`},
+{c:"biz",d:"easy",q:'What is the Pareto principle (80/20 rule)?',a:`<p>~80% of effects come from 20% of causes. In analytics: 20% of customers often generate 80% of revenue. Useful for prioritising analysis — find the vital few that drive the most impact.</p>`},
+{c:"biz",d:"easy",q:'What is year-over-year (YoY) analysis?',a:`<p>Compares a metric in the current period to the same period last year, removing seasonal effects. More meaningful than month-over-month for seasonal businesses. The most common business performance comparison.</p>`},
+{c:"biz",d:"easy",q:'What is ROI?',a:`<p>Return on Investment = (gain − cost) / cost × 100. Used to evaluate whether a project or campaign is worth the spend. Analysts calculate ROI to justify data infrastructure investments and evaluate marketing spend.</p>`},
+{c:"biz",d:"easy",q:'What is NPS (Net Promoter Score)?',a:`<p>Asks: 'How likely are you to recommend us?' (0–10). Promoters (9–10) minus Detractors (0–6) = NPS (−100 to +100). A widely used measure of customer loyalty. Above 50 is considered excellent.</p>`},
+{c:"biz",d:"easy",q:'Descriptive vs diagnostic vs predictive vs prescriptive analytics?',a:`<p>Descriptive: what happened (reports). Diagnostic: why (root cause analysis). Predictive: what will happen (forecasting). Prescriptive: what should we do (optimisation). Each adds more business value and requires more sophistication.</p>`},
+{c:"biz",d:"easy",q:'What is a north star metric?',a:`<p>The single metric that best captures the core value your product delivers. Examples: weekly active users (Facebook), nights booked (Airbnb). Aligns the entire company around one ultimate measure of product success.</p>`},
+{c:"biz",d:"easy",q:'What is demand forecasting?',a:`<p>Predicting future customer demand for planning inventory, staffing, and capacity. Methods range from simple moving averages to ML models. Accuracy reduces both overstocking and stockouts.</p>`},
+{c:"biz",d:"easy",q:'What is a competitive analysis?',a:`<p>Compares your metrics to competitors — pricing, market share, growth. Sources: public filings, web scraping, third-party intelligence, customer surveys. Provides context for whether your performance is strong or weak.</p>`},
+{c:"biz",d:"easy",q:'What is unit economics?',a:`<p>Examines profitability per unit (customer, transaction, product). Key metrics: contribution margin, CAC, LTV. A business with poor unit economics cannot be scaled profitably regardless of its growth rate.</p>`},
+{c:"tool",d:"easy",q:'Excel vs Python/pandas — when to use which?',a:`<p>Excel: ad-hoc analysis, sharing with non-technical users, quick financial models. Python/pandas: large datasets, automation, reproducibility, integration into pipelines. Know both — Excel for communication, Python for scalable analysis.</p>`},
+{c:"tool",d:"easy",q:'What is Git and why should data analysts use it?',a:`<p>A version control system tracking changes to files. For analysts: version SQL scripts and notebooks, collaborate without conflicts, document analytical process, and build a public portfolio on GitHub.</p>`},
+{c:"tool",d:"easy",q:'What is a Jupyter Notebook?',a:`<p>Interactive environment combining code, markdown, and visualisations. Standard for EDA. JupyterLab is the modern successor. VS Code also runs notebooks natively with full IDE features.</p>`},
+{c:"tool",d:"easy",q:'What is dbt?',a:`<p>Lets analysts write SQL transformations as version-controlled models with tests, documentation, and dependency management. Runs inside the data warehouse. The standard tool for the Transform step in modern ELT pipelines.</p>`},
+{c:"tool",d:"easy",q:'What is DuckDB?',a:`<p>An in-process analytical database that runs inside Python or R. Can query CSV, Parquet, and JSON files directly with SQL at impressive speed without a server. The go-to for larger-than-memory datasets locally.</p>`},
+{c:"tool",d:"easy",q:'What is Streamlit?',a:`<p>A Python library for building interactive data apps in minutes. Write a Python script with <code>st.write()</code>, <code>st.dataframe()</code>, <code>st.slider()</code> — Streamlit turns it into a web app. Popular for sharing ML models and EDA tools.</p>`},
+{c:"tool",d:"easy",q:'What is a .gitignore file?',a:`<p>Tells Git which files to exclude from version control — API keys, large data files, <code>.env</code>, <code>__pycache__</code>. Preventing secrets from being committed to GitHub is critical. Templates available at gitignore.io.</p>`},
+{c:"tool",d:"easy",q:'What is an .env file?',a:`<p>Stores environment variables (database passwords, API keys) locally, separate from source code. Use <code>python-dotenv</code> to load them. Never commit .env to Git — always add it to .gitignore.</p>`},
+{c:"tool",d:"easy",q:'What is DBeaver?',a:`<p>A free, cross-platform database management tool supporting 80+ databases (PostgreSQL, MySQL, Snowflake, BigQuery). Alternative to SSMS or individual database clients. Popular because one tool covers all databases.</p>`},
+{c:"tool",d:"easy",q:'What is ydata-profiling?',a:`<p>Generates a comprehensive HTML data quality report from a pandas DataFrame in one line: <code>ProfileReport(df).to_file('report.html')</code>. Shows distributions, correlations, missing values. Fast way to understand a new dataset.</p>`},
+{c:"tool",d:"easy",q:'What is Polars?',a:`<p>A fast DataFrame library written in Rust. Dramatically faster than pandas for large datasets, supports lazy evaluation, and has a clean modern API. Use it as a pandas replacement when performance is critical.</p>`},
+{c:"tool",d:"easy",q:'What is Google Colab?',a:`<p>A free, cloud-based Jupyter notebook environment with free GPU access. No local setup required. Portfolio projects on Colab can be shared via link, stored in Drive, or synced to GitHub.</p>`},
+{c:"tool",d:"easy",q:'What is a requirements.txt file?',a:`<p>Lists Python package dependencies with optional version pins: <code>pandas==2.1.0</code>. Install with <code>pip install -r requirements.txt</code>. Essential for reproducibility — ensures the same package versions everywhere.</p>`},
+{c:"tool",d:"easy",q:'What is Great Expectations?',a:`<p>A Python library for automated data quality tests — like unit tests for data. Define expectations (e.g. column must not be null, values must be in range) and run them in CI/CD pipelines to catch data quality issues early.</p>`},
+{c:"tool",d:"easy",q:'What is a REST API and how do you consume one in Python?',a:`<p>An API using HTTP methods (GET, POST) to access resources, typically returning JSON. In Python: <code>import requests; r = requests.get(url, headers={...}); data = r.json()</code>. Then <code>pd.json_normalize(data)</code> to flatten into a DataFrame.</p>`},
+{c:"beh",d:"easy",q:'Tell me about a time you found a meaningful insight from data.',a:`<p>Use <strong>STAR</strong>: Situation → Task → Action → Result. Describe the business context, what you analysed, what you found, and the quantified outcome. Always put a number on the result.</p><div class="tip"><strong>Tip:</strong> "We reduced churn by 12%" is far stronger than "we improved retention."</div>`},
+{c:"beh",d:"easy",q:'How do you explain a complex finding to a non-technical manager?',a:`<p>Lead with the business implication, use analogies and round numbers, avoid statistical jargon, and connect findings to a recommendation. Every finding should answer "so what?" and point to a clear action.</p>`},
+{c:"beh",d:"easy",q:'How do you handle ambiguous requirements?',a:`<p>Ask clarifying questions before starting: <em>"What decision will this support?"</em>, <em>"What does success look like?"</em>. Deliver a quick draft early to validate direction. Ambiguity is normal — navigating it professionally is what sets great analysts apart.</p>`},
+{c:"beh",d:"easy",q:'Tell me about a time your analysis was wrong.',a:`<p>Choose a professional example. Structure: what went wrong, how you discovered it, how you corrected it, what safeguard you put in place. End on the lesson. This question tests self-awareness and accountability.</p>`},
+{c:"beh",d:"easy",q:'What would you do in your first 30 days in a data analyst role?',a:`<p>Listen first: understand the business model, key metrics, data stack, and team processes. Map available data. Identify a quick win for week 2. Build relationships with stakeholders to understand their real pain points.</p>`},
+{c:"beh",d:"easy",q:'Why do you want to be a data analyst?',a:`<p>Be specific. Connect your skills (logic, communication, curiosity) to real impact. Avoid "I like numbers." Strong answer: <em>"I find it satisfying to translate messy data into a decision someone can actually act on."</em></p>`},
+{c:"beh",d:"easy",q:'How do you prioritise when working on multiple requests?',a:`<p>Clarify urgency vs importance with requesters, communicate timelines proactively. Ask stakeholders: <em>"If I can only deliver one today, which moves the needle most?"</em> Break large tasks into quick wins.</p>`},
+{c:"beh",d:"easy",q:'Describe a time you found a data quality issue.',a:`<p>Describe finding an anomaly, investigating root cause, communicating impact to stakeholders, and preventing recurrence. Key message: never silently work around quality issues — always surface, document, and quantify their impact.</p>`},
+{c:"beh",d:"easy",q:'How do you ensure your analysis is reproducible?',a:`<p>Version SQL/Python in Git, document data sources and transformations, use notebooks with clear narrative, pin package versions in requirements.txt, and never manually edit source data. Another analyst should get the same result.</p>`},
+{c:"beh",d:"easy",q:'Describe a time you automated a repetitive analytical task.',a:`<p>Example: weekly report manually built each Monday → automated with Python + scheduled job. Highlight time saved, error reduction, and freeing yourself for higher-value work. Automation skills are highly valued in modern data roles.</p>`},
+{c:"beh",d:"easy",q:'How do you approach learning a new tool?',a:`<p>Hands-on over reading: build a small project that mirrors a real use case. Use official documentation, tutorials, and YouTube. Then apply to a portfolio project. Mention a specific tool you learned this way recently.</p>`},
+{c:"beh",d:"easy",q:'How do you handle disagreements about data interpretation?',a:`<p>Start by understanding the other person's logic. Check definitions — disagreements are often caused by different metric definitions rather than different data. Present your evidence calmly and propose an empirical test to resolve it.</p>`},
+{c:"beh",d:"easy",q:'Tell me about a project you are most proud of.',a:`<p>Choose a project with clear business impact. Structure: the problem, what you did, tools used, and quantified outcome. If it's in your GitHub portfolio, mention the link. Authenticity matters as much as technical detail.</p>`},
+{c:"beh",d:"easy",q:'How do you maintain attention to detail?',a:`<p>Sanity checks (do totals add up?), row count checks before and after joins, visualising distributions before and after cleaning, testing edge cases, peer reviews. Describe specific checks you run routinely as part of your workflow.</p>`},
+{c:"beh",d:"easy",q:'What are your go-to resources when you\'re stuck?',a:`<p>Official documentation first, then Stack Overflow, then community forums (dbt Slack, Reddit r/learnpython). For statistics: StatQuest YouTube, OpenIntro Statistics (free). For quick concepts: ChatGPT. Don't forget: asking a colleague is often fastest.</p>`},
+{c:"beh",d:"easy",q:'How do you present to senior executives?',a:`<p>Lead with the recommendation and three supporting data points. One-page summaries, clear headlines not descriptions, state business implications upfront. Caveats and methodology go at the bottom. Executives want implications, not analysis methodology.</p>`},
+{c:"beh",d:"easy",q:'What is your biggest weakness as a data analyst?',a:`<p>Choose a genuine, relevant weakness then show self-awareness and what you're doing about it. Example: <em>"I sometimes spend too long refining a visualisation. I've started timeboxing design work and asking for feedback earlier."</em></p>`},
+{c:"beh",d:"easy",q:'Tell me about a time you influenced a business decision with data.',a:`<p>Show end-to-end ownership: you identified the question, gathered and cleaned the data, produced the analysis, communicated the insight, and the business took action because of it. Show the chain from data to decision to outcome.</p>`},
+{c:"beh",d:"easy",q:'Do you have any questions for us?',a:`<p>Always prepare questions. Strong ones: <em>"What does success look like at 6 months?"</em>, <em>"What's the biggest data challenge the team faces right now?"</em>, <em>"How does the team approach professional development?"</em>, <em>"What does the data stack look like and where is it heading?"</em></p>`},
+{c:"beh",d:"easy",q:'How do you think about ethics in data analytics?',a:`<p>Consider: is PII handled correctly? Could insights be used to discriminate? Are samples representative? Are models fair across demographic groups? Is analysis being used to support a pre-decided conclusion? Ethical analytics starts with asking these questions upfront.</p>`}
+];
+
+const PER=25;
+let fQ=[],page=1,cat="all",sv="";
+
+function filter(){
+  const s=sv.toLowerCase();
+  fQ=Q.filter(q=>(cat==="all"||q.c===cat)&&(!s||q.q.toLowerCase().includes(s)||q.a.toLowerCase().includes(s)));
+}
+
+function render(){
+  const main=document.getElementById("main");
+  main.querySelectorAll(".card,.sec-title").forEach(e=>e.remove());
+  document.getElementById("no-r").style.display="none";
+  if(!fQ.length){document.getElementById("no-r").style.display="block";document.getElementById("rbar").textContent="";document.getElementById("pg").innerHTML="";document.getElementById("vq").textContent="0";return;}
+  const s=(page-1)*PER,e=Math.min(s+PER,fQ.length),pg=fQ.slice(s,e);
+  document.getElementById("rbar").textContent=`showing ${s+1}–${e} of ${fQ.length} questions`;
+  document.getElementById("vq").textContent=fQ.length;
+  const groups={};
+  pg.forEach((q,i)=>{if(!groups[q.c])groups[q.c]=[];groups[q.c].push({...q,idx:s+i+1});});
+  ["sql","py","stat","xl","ml","dc","cl","viz","biz","tool","beh"].forEach(c=>{
+    if(!groups[c])return;
+    const t=document.createElement("div");t.className="sec-title";t.textContent=CL[c];main.appendChild(t);
+    groups[c].forEach(q=>{
+      const card=document.createElement("div");card.className="card";
+      card.innerHTML=`<div class="ch"><span class="qn">#${String(q.idx).padStart(3,"0")}</span><div class="qb"><div class="qt"><span class="qtxt">${q.q}</span><span class="chev">&#8964;</span></div><div class="meta"><span class="tag t-${q.c}">${CL[q.c]}</span><span class="diff d-${q.d==="easy"?"easy":"med"}">${q.d==="easy"?"Beginner":"Intermediate"}</span></div></div></div><div class="ans"><div class="ans-inner"><div class="albl">Model Answer</div>${q.a}</div></div>`;
+      card.querySelector(".ch").addEventListener("click",()=>{const o=card.classList.toggle("open");card.querySelector(".ans").setAttribute("aria-hidden",String(!o));});
+      main.appendChild(card);
+    });
+  });
+  renderPg();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function renderPg(){
+  const tot=Math.ceil(fQ.length/PER),pg=document.getElementById("pg");
+  pg.innerHTML="";if(tot<=1)return;
+  const mk=(lbl,p,on)=>{const b=document.createElement("button");b.className="pb"+(on?" on":"");b.textContent=lbl;b.onclick=()=>{page=p;render();};return b;};
+  if(page>1)pg.appendChild(mk("&#8592; Prev",page-1,false));
+  for(let i=1;i<=tot;i++)pg.appendChild(mk(i,i,i===page));
+  if(page<tot)pg.appendChild(mk("Next &#8594;",page+1,false));
+}
+
+document.querySelectorAll(".fp").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll(".fp").forEach(x=>x.classList.remove("on"));b.classList.add("on");cat=b.dataset.c;page=1;filter();render();}));
+document.getElementById("srch").addEventListener("input",e=>{sv=e.target.value;page=1;filter();render();});
+filter();render();
+</script>
+</body>
+</html>
